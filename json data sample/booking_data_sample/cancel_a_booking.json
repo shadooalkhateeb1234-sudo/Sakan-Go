@@ -1,0 +1,26 @@
+
+{
+  "name": "Cancel a Booking",
+  "method": "GET",
+  "route": "/cancelAbook/{booking_id}",
+  "headers": {
+    "Authorization": "Bearer {user_token}",
+    "Accept": "application/json"
+  },
+  "body": null,
+  "success_response": {
+    "status": true,
+    "message": "تم الغاء الحجز",
+
+  },
+  "error_responses": [
+    {
+      "status": 404,
+      "message": "الحجز غير موجود"
+    },
+    {
+      "status": 422,
+      "message": "لا يمكن تعديل هذا الحجز"
+    }
+  ]
+}

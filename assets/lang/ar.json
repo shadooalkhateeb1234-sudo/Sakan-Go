@@ -1,0 +1,27 @@
+{
+  "Splash Error" : "فشل في تحميل البيانات",
+  "App Name" : "سكن غو",
+  "Onboarding Error" : "فشل في إتمام العملية",
+  "Onboarding1" : "آلاف من أفضل العقارات بأسعار معقولة",
+  "Onboarding2" : "احجز عقارًا بسرعة وسهولة بنقرة واحدة",
+  "Onboarding3" : "دعنا نجد لك العقار المناسب الآن",
+  "Skip" : "تخطي",
+  "Next" : "التالي",
+  "Get Started" : "ابدأ",
+
+  "Registration" : "التسجيل",
+  "Phone Number Title": "",
+  "Phone Number Subtitle": "أدخل رقمك لتأكيد حسابك",
+  "Phone Number Button": "",
+  "OTP Title": "",
+  "OTP Subtitle": "",
+  "OTP Button": "",
+
+  "Register Title" : "التسجيل ",
+  "Profile" : "الملف الشخصي",
+  "First Name" : "الاسم الأول",
+  "Last Name" : "الاسم الثاني",
+  "Birth Date" : "تاريخ الميلاد",
+  "Id Image Hint" : "صورة الهوية",
+  "Submit Button" : "تأكيد"
+}

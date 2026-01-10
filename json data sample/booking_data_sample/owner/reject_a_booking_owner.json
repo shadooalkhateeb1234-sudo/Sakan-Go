@@ -1,0 +1,26 @@
+
+{
+  "name": "Reject a Booking (Owner)",
+  "method": "GET",
+  "route": "/rejectAbook/{booking_id}",
+  "headers": {
+    "Authorization": "Bearer {owner_token}",
+    "Accept": "application/json"
+  },
+  "body": null,
+  "success_response": {
+    "status": true,
+    "message": "المالك رفض الحجز,تواصل معه اذا اردت ان تعرف التفاصيل",
+
+  },
+  "error_responses": [
+    {
+      "status": 404,
+      "message": "الحجز غير موجود"
+    },
+    {
+      "status": 422,
+      "message": "تم اتخاذ قرار سابق على هذا الحجز"
+    }
+  ]
+}

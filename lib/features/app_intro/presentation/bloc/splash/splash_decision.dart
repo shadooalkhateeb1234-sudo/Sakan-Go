@@ -1,0 +1,1 @@
+enum SplashDecision { onboarding, phoneNumber, completeProfile, approval, home }

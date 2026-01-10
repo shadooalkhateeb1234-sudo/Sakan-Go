@@ -1,0 +1,10 @@
+{
+  "notification": {
+    "title": "Booking approved",
+    "body": "Your booking has been approved"
+  },
+  "data": {
+    "type": "booking",
+    "booking_id": "12"
+  }
+}

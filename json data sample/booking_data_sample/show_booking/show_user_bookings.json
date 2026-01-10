@@ -1,0 +1,29 @@
+
+{
+  "name": "Show User Bookings",
+  "method": "GET",
+  "route": "/showUserBookings",
+  "headers": {
+    "Authorization": "Bearer {user_token}",
+    "Accept": "application/json"
+  },
+  "body": null,
+  "success_response": {
+    "status": true,
+    "data": [
+      {
+        "id": 2,
+        "user_id": 12,
+        "apartment_id": 2,
+        "start_date": "2025-02-10",
+        "end_date": "2025-02-12",
+        "total_price": 800000,
+        "status": "pending"
+      }
+    ]
+  },
+  "empty_response": {
+    "status": false,
+    "message": "لا يوجد حجوزات حالياً"
+  }
+}

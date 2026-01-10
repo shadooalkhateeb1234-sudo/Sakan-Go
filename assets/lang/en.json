@@ -1,0 +1,27 @@
+{
+  "Splash Error" : "Failed to load data",
+  "App Name" : "Sakan Go",
+  "Onboarding Error" : "Failed to complete onboarding",
+  "Onboarding1" : "Thousands of the best real estate at affordable prices",
+  "Onboarding2" : "Book a real estate quickly and easily with one click",
+  "Onboarding3" : "Let’s find the real estate that suits you right now",
+  "Skip" : "Skip",
+  "Next" : "Next",
+  "Get Started" : "Get Started",
+
+  "Registration" : "Registration",
+  "Phone Number Title": "",
+  "Phone Number Subtitle": "Enter your phone number to verify your account",
+  "Phone Number Button": "",
+  "OTP Title": "",
+  "OTP Subtitle": "",
+  "OTP Button": "",
+
+
+  "Profile" : "Profile",
+  "First Name" : "First Name",
+  "Last Name" : "Last Name",
+  "Birth Date" : "Birth Date",
+  "Id Image Hint" : "Id Image",
+  "Submit Button" : "Submit"
+}

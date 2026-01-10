@@ -1,0 +1,38 @@
+
+    {
+      "name": "Book an Apartment",
+      "method": "POST",
+      "route": "/bookAnApartment/{apartment_id}",
+      "headers": {
+        "Authorization": "Bearer {user_token}",
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      "body": {
+        "start_date": "2025-02-10",
+        "end_date": "2025-02-12"
+      },
+      "success_response": {
+        "status": true,
+        "message": "تم تسجيل حجزك ,عليك انتظار موافقة",
+        "data": {
+          "id": 2,
+          "user_id": 12,
+          "apartment_id": 2,
+          "start_date": "2025-02-10",
+          "end_date": "2025-02-12",
+          "total_price": 800000,
+          "status": "pending"
+        }
+      },
+      "error_responses": [
+        {
+          "status": 404,
+          "message": "الشقة غير موجودة"
+        },
+        {
+          "status": 422,
+          "message": "يوجد حجز آخر ضمن نفس الفترة الزمنية"
+        }
+      ]
+    }
