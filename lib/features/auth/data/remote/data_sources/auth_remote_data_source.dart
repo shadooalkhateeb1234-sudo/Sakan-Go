@@ -1,12 +1,11 @@
 import 'package:http/http.dart' as http;
+import 'package:sakan_go/features/auth/data/remote/data_sources/verify_phone_otp_response.dart';
 import 'dart:convert';
-
-import 'package:sakan_go_mobile_app/features/auth/data/remote/data_sources/verify_phone_otp_response.dart';
-import 'package:sakan_go_mobile_app/features/auth/data/remote/models/refresh_token_model.dart';
+import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/network/http_status_codes.dart';
 import '../../../../../core/network/api_endpoints.dart';
-import '../../../../../core/errors/exceptions.dart';
 import '../models/auth_model.dart';
+import '../models/refresh_token_model.dart';
 
 abstract class AuthRemoteDataSource
 {

@@ -2,10 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-import 'package:sakan_go_mobile_app/core/assets_manager/icons_manager.dart';
+import '../../../../core/assets manager/icons_manager.dart';
 import '../../../../core/localization/app_localizations.dart';
-import '../../../../core/routing/route_name.dart';
+import '../../../../core/routing/routes_name.dart';
 import '../widgets/primary_action_button.dart';
 import '../widgets/phone_number_field.dart';
 import '../widgets/auth_bubbles.dart';

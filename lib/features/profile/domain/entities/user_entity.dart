@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
-
-import 'package:sakan_go_mobile_app/features/user_session/domain/entities/user_session_entity.dart';
-import 'package:sakan_go_mobile_app/features/profile/domain/entities/profile_entity.dart';
+import 'package:sakan_go/features/profile/domain/entities/profile_entity.dart';
+import '../../../user_session/domain/entities/user_session_entity.dart';
 
 class UserEntity extends Equatable
 {

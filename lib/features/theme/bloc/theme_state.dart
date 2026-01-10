@@ -1,4 +1,5 @@
-import 'package:sakan_go_mobile_app/features/theme/domain/entities/theme_entity.dart';
+
+import '../domain/entities/theme_entity.dart';
 
 enum ThemeStatus { initial, loading, success, error }
 

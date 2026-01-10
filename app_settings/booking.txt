@@ -306,8 +306,8 @@
         },
         {
 
-شهد اسليم, [1/6/2026 4:11 PM]
-"status": 409,
+
+          "status": 409,
           "message": "the booking is already rejected or cancelled"
         }
       ]
@@ -464,8 +464,8 @@
           "status": 422,
           "errors": {
 
-شهد اسليم, [1/6/2026 4:11 PM]
-"stars": ["the rating is required", "the rating must be an integer", "the rating must be at least 1", "the rating must not be greater than 5"],
+
+          "stars": ["the rating is required", "the rating must be an integer", "the rating must be at least 1", "the rating must not be greater than 5"],
             "comment": ["the comment field must be a text", "the comment must not be more than 1024"]
           }
         }

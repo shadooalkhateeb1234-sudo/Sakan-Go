@@ -1,14 +1,13 @@
 import 'package:dartz/dartz.dart';
-
-import 'package:sakan_go_mobile_app/features/admin_approval/data/remote/data_sources/admin_approval_remote_data_source.dart';
-import 'package:sakan_go_mobile_app/features/admin_approval/domain/entities/admin_approval_entity.dart';
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failures.dart';
 import '../../../user_session/data/local/data_sources/user_session_local_data_source.dart';
 import '../../../user_session/data/local/models/user_session_model.dart';
 import '../../../user_session/domain/entities/user_session_entity.dart';
+import '../../domain/entities/admin_approval_entity.dart';
 import '../../domain/repositories/admin_approval_repository.dart';
 import '../../../../core/network/network_info.dart';
-import '../../../../core/errors/exceptions.dart';
-import '../../../../core/errors/failures.dart';
+import '../remote/data_sources/admin_approval_remote_data_source.dart';
 
 class AdminApprovalRepositoryImpl implements AdminApprovalRepository
 {

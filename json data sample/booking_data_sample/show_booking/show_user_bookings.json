@@ -1,8 +1,7 @@
-
 {
   "name": "Show User Bookings",
   "method": "GET",
-  "route": "/showUserBookings",
+  "route": "/booking/showUserBookings",
   "headers": {
     "Authorization": "Bearer {user_token}",
     "Accept": "application/json"
@@ -20,10 +19,12 @@
         "total_price": 800000,
         "status": "pending"
       }
-    ]
+    ],
+    "code": 200
   },
   "empty_response": {
     "status": false,
-    "message": "لا يوجد حجوزات حالياً"
+    "message": " no existing booking ",
+    "code": 200
   }
 }

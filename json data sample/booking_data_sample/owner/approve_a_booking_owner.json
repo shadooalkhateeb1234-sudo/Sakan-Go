@@ -1,0 +1,35 @@
+{
+  "name": "Approve a Booking (Owner)",
+  "method": "GET",
+  "route": "/booking/approveAbooke/{booking_id}",
+  "headers": {
+    "Authorization": "Bearer {owner_token}",
+    "Accept": "application/json"
+  },
+  "body": null,
+  "success_response": {
+    "status": true,
+    "data": {
+      "id": 2,
+      "user_id": 12,
+      "apartment_id": 2,
+      "start_date": "2025-02-10",
+      "end_date": "2025-02-12",
+      "total_price": 800000,
+      "status": "confirmed"
+    },
+    "code": 200
+  },
+  "error_responses": [
+    {
+      "status": 404,
+      "message": "the booking not found"
+    },
+    {
+
+
+      "status": 409,
+      "message": "the booking is already rejected or cancelled"
+    }
+  ]
+}

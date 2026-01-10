@@ -1,0 +1,10 @@
+{
+  "notification": {
+    "title": "New booking request",
+    "body": "A user requested to book your apartment"
+  },
+  "data": {
+    "type": "owner_booking",
+    "booking_id": "12"
+  }
+}

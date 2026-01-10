@@ -1,9 +1,7 @@
-import 'package:permission_handler/permission_handler.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-
 import '../widgets/personal_image_picker.dart';
 import '../widgets/profile_text_field.dart';
 import '../widgets/id_image_picker.dart';
@@ -255,4 +253,10 @@ class _ProfilePageState extends State<ProfilePage>
       )
     );
   }
+}
+
+class Permission {
+  static get camera => null;
+
+  static get storage => null;
 }

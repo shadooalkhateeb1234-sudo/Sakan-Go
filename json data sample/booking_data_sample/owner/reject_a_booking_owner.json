@@ -1,8 +1,7 @@
-
 {
   "name": "Reject a Booking (Owner)",
   "method": "GET",
-  "route": "/rejectAbook/{booking_id}",
+  "route": "/booking/rejectAbook/{booking_id}",
   "headers": {
     "Authorization": "Bearer {owner_token}",
     "Accept": "application/json"
@@ -10,17 +9,17 @@
   "body": null,
   "success_response": {
     "status": true,
-    "message": "المالك رفض الحجز,تواصل معه اذا اردت ان تعرف التفاصيل",
-
+    "message": "owner rejected the booking,contact with the owner to learn more",
+    "code": 200
   },
   "error_responses": [
     {
       "status": 404,
-      "message": "الحجز غير موجود"
+      "message": "the booking not found"
     },
     {
-      "status": 422,
-      "message": "تم اتخاذ قرار سابق على هذا الحجز"
+      "status": 409,
+      "message": "the booking is already rejected or cancelled"
     }
   ]
 }

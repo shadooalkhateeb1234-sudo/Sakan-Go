@@ -1,23 +1,20 @@
 
-class Booking {
-  final String id;
-  final String apartmentId;
-  final DateTime startDate;
-  final DateTime endDate;
-  final String userId;//?
-  final bool approved;//?
-// final BookingStatus status; // pending, approved, cancelled
+class BookingEntity {
+  final int id;
+  final int apartment_id;
+  final int user_id;
+  final DateTime start_date;
+  final DateTime end_date;
+  final String status; // pending | confirmed | cancelled | rejected | completed
+  final int total_price;
 
-  Booking({
+  const BookingEntity({
     required this.id,
-    required this.apartmentId,
-    required this.startDate,
-    required this.endDate,
-    required this.userId,
-    required this.approved,
-  // required this.status,
+    required this.apartment_id,
+    required this.user_id,
+    required this.start_date,
+    required this.end_date,
+    required this.status,
+    required this.total_price
   });
 }
-//...........
-
-

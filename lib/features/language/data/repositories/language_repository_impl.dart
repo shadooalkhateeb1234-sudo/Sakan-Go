@@ -1,4 +1,4 @@
-import 'package:sakan_go_mobile_app/features/language/domain/entities/language_entity.dart';
+import '../../domain/entities/language_entity.dart';
 import '../../domain/repositories/language_repository.dart';
 import '../local/language_local_data_source.dart';
 

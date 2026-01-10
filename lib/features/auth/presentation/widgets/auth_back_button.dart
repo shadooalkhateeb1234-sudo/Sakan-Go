@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/routing/route_name.dart';
+import '../../../../core/routing/routes_name.dart';
 
 class AuthBackButton extends StatelessWidget
 {

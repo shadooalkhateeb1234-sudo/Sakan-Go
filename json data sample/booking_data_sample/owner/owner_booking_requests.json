@@ -1,0 +1,31 @@
+{
+  "name": "Owner Booking Requests",
+  "method": "GET",
+  "route": "/booking/ownerBookingRequests",
+  "headers": {
+    "Authorization": "Bearer {owner_token}",
+    "Accept": "application/json"
+  },
+  "body": null,
+  "success_response": {
+    "status": true,
+    "data": [
+      {
+        "id": 2,
+        "user_id": 12,
+        "apartment_id": 2,
+        "start_date": "2025-02-10",
+        "end_date": "2025-02-12",
+        "total_price": 800000,
+        "status": "pending"
+      }
+    ],
+    "code": 200
+  },
+  "error_responses": [
+    {
+      "status": 403,
+      "message": "Only apartment owner is allowed to perform this action"
+    }
+  ]
+}

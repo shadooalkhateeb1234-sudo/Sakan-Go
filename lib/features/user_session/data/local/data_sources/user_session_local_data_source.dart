@@ -1,8 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-
-import 'package:sakan_go_mobile_app/core/cache/cache_keys.dart';
-import '../../../../../core/errors/exceptions.dart';
+import '../../../../../core/cache/cache_keys.dart';
+import '../../../../../core/error/exceptions.dart';
 import '../../factories/user_session_default.dart';
 import '../models/user_session_model.dart';
 

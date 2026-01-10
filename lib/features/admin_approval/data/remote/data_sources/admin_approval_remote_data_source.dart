@@ -1,10 +1,9 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-import 'package:sakan_go_mobile_app/features/admin_approval/data/remote/models/admin_approval_model.dart';
-import 'package:sakan_go_mobile_app/core/network/http_status_codes.dart';
+import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/network/api_endpoints.dart';
-import '../../../../../core/errors/exceptions.dart';
+import '../../../../../core/network/http_status_codes.dart';
+import '../models/admin_approval_model.dart';
 
 abstract class AdminApprovalRemoteDataSource
 {

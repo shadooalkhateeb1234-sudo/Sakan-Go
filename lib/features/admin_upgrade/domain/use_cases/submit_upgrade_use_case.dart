@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
+import '../../../../core/error/failures.dart';
+import '../repositories/admin_upgrade_repository.dart';
 
-import 'package:sakan_go_mobile_app/features/admin_upgrade/domain/repositories/admin_upgrade_repository.dart';
-import '../../../../core/errors/failures.dart';
 
 class SubmitUpgradeUseCase
 {

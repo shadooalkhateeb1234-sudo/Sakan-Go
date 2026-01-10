@@ -1,0 +1,46 @@
+
+{
+  "name": "Update Booking",
+  "method": "POST",
+  "route": "/booking/updateBooking/{booking_id}",
+  "headers": {
+    "Authorization": "Bearer {user_token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+  },
+  "body": {
+    "update_start_date": "2025-02-11",
+    "update_end_date": "2025-02-13",
+    "payment_method": "cash",
+    "latitude": 33.5138,
+    "longitude": 36.2765
+  },
+  "success_response": {
+    "status": true,
+    "data": {
+      "id": 1,
+      "booking_id": 2,
+      "status": "pending",
+      "update_start_date": "2025-02-11",
+      "update_end_date": "2025-02-13"
+    },
+    "code": 201
+  },
+  "error_responses": [
+    {
+      "status": 404,
+      "message": "the booking not found"
+    },
+    {
+      "status": 409,
+      "message": "Sorry, there is another booking within the same time period."
+    },
+    {
+      "status": 422,
+      "errors": {
+        "update_start_date": ["the update start date is required", "the update start date must be after or equal of update start date"],
+        "update_end_date": ["the update end date is required", "the update end date must be after or equal of update start date"]
+      }
+    }
+  ]
+}

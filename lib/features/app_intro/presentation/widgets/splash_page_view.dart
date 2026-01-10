@@ -1,10 +1,8 @@
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter/material.dart';
-
-import 'package:sakan_go_mobile_app/core/assets_manager/images_manager.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import '../../../../core/assets manager/images_manager.dart';
 import '../../../../core/localization/app_localizations.dart';
-import '../../../../core/theme/app_colors.dart';
+import '../../../../core/styles/app_colors.dart';
 
 class SplashPageView extends StatefulWidget
 {
@@ -17,6 +15,8 @@ class SplashPageView extends StatefulWidget
 class _SplashPageViewState extends State<SplashPageView>
 {
   String? appVersion;
+
+  get PackageInfo => null;
 
   @override
   void initState()

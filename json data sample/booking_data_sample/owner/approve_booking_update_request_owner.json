@@ -1,0 +1,25 @@
+{
+  "name": "Approve Booking Update Request (Owner)",
+  "method": "GET",
+  "route": "/booking/approveBookingUpdateRequest/{booking_update_request_id}",
+  "headers": {
+    "Authorization": "Bearer {owner_token}",
+    "Accept": "application/json"
+  },
+  "body": null,
+  "success_response": {
+    "status": true,
+    "message": "booking update request approved",
+    "code": 200
+  },
+  "error_responses": [
+    {
+      "status": 404,
+      "message": "booking update request not found"
+    },
+    {
+      "status": 409,
+      "message": "the booking is already rejected or cancelled"
+    }
+  ]
+}

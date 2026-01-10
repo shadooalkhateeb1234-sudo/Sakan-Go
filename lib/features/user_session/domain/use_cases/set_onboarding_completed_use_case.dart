@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
-
+import '../../../../core/error/failures.dart';
 import '../repositories/user_session_repository.dart';
-import '../../../../core/errors/failures.dart';
 
 class SetOnboardingCompletedUseCase
 {

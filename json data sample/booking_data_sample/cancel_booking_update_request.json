@@ -1,0 +1,25 @@
+{
+  "name": "Cancel Booking Update Request",
+  "method": "GET",
+  "route": "/booking/cancelBookingUpdateRequest/{booking_update_request_id}",
+  "headers": {
+    "Authorization": "Bearer {user_token}",
+    "Accept": "application/json"
+  },
+  "body": null,
+  "success_response": {
+    "status": true,
+    "message": "booking update request cancelled",
+    "code": 200
+  },
+  "error_responses": [
+    {
+      "status": 404,
+      "message": "booking update request not found"
+    },
+    {
+      "status": 409,
+      "message": "the booking is already rejected or cancelled"
+    }
+  ]
+}

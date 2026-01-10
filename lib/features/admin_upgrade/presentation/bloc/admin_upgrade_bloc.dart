@@ -1,8 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'dart:async';
-
-import 'package:sakan_go_mobile_app/features/admin_upgrade/domain/use_cases/submit_upgrade_use_case.dart';
 import '../../domain/use_cases/check_admin_upgrade_use_case.dart';
+import '../../domain/use_cases/submit_upgrade_use_case.dart';
 import 'admin_upgrade_event.dart';
 import 'admin_upgrade_state.dart';
 

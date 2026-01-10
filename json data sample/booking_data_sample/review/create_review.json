@@ -1,0 +1,55 @@
+{
+  "name": "Create Review",
+  "method": "POST",
+  "route": "/review/createReview/{booking_id}",
+  "headers": {
+    "Authorization": "Bearer {user_token}",
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+  },
+  "body": {
+    "stars": 5,
+    "comment": "Great apartment!"
+  },
+  "success_response": {
+    "status": true,
+    "message": "review created successfully",
+    "data": {
+      "id": 1,
+      "user": {
+        "id": 12,
+        "name": "John Doe"
+      },
+      "apartment": {
+        "id": 2,
+        "title": "Beautiful Apartment"
+      },
+      "stars": 5,
+      "comment": "Great apartment!"
+    },
+    "code": 201
+  },
+  "error_responses": [
+    {
+      "status": 404,
+      "message": "the booking not found"
+    },
+    {
+      "status": 409,
+      "message": "the review is already exists"
+    },
+    {
+      "status": 409,
+      "message": "the booking must be completed to make review"
+    },
+    {
+      "status": 422,
+      "errors": {
+
+
+        "stars": ["the rating is required", "the rating must be an integer", "the rating must be at least 1", "the rating must not be greater than 5"],
+        "comment": ["the comment field must be a text", "the comment must not be more than 1024"]
+      }
+    }
+  ]
+}

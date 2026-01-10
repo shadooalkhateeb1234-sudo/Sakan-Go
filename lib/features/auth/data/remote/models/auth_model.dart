@@ -1,4 +1,4 @@
-import 'package:sakan_go_mobile_app/features/auth/domain/entities/auth_entity.dart';
+import '../../../domain/entities/auth_entity.dart';
 
 class AuthModel extends AuthEntity
 {

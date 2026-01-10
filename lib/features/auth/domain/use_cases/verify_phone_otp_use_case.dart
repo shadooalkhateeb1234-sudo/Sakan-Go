@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
-
+import '../../../../core/error/failures.dart';
 import '../../../user_session/domain/entities/user_session_entity.dart';
-import '../../../../core/errors/failures.dart';
 import '../repositories/auth_repository.dart';
 
 class VerifyPhoneOtpUseCase

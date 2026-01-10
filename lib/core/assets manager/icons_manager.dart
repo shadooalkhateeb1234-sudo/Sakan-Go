@@ -1,3 +1,6 @@
-const String iconsPath = 'assets/icons/';
+class IconsManager
+{
+  static const String iconsPath = 'assets/icons/';
 
-class IconsManager {}
+  static const String registration = '${iconsPath}registration.svg';
+}

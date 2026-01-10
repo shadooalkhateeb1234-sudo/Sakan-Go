@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 
-import 'package:sakan_go_mobile_app/features/admin_upgrade/domain/repositories/admin_upgrade_repository.dart';
-import 'package:sakan_go_mobile_app/features/admin_upgrade/domain/entities/admin_upgrade_entity.dart';
-import '../../../../core/errors/failures.dart';
+import '../../../../core/error/failures.dart';
+import '../entities/admin_upgrade_entity.dart';
+import '../repositories/admin_upgrade_repository.dart';
 
 class CheckAdminUpgradeUseCase
 {

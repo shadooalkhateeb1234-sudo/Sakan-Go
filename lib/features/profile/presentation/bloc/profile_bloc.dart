@@ -1,11 +1,10 @@
 import 'package:bloc/bloc.dart';
-
-import 'package:sakan_go_mobile_app/features/profile/presentation/bloc/profile_event.dart';
-import 'package:sakan_go_mobile_app/features/profile/presentation/bloc/profile_state.dart';
+import 'package:sakan_go/features/profile/presentation/bloc/profile_event.dart';
+import 'package:sakan_go/features/profile/presentation/bloc/profile_state.dart';
+import '../../../../core/error/failures.dart';
 import '../../domain/use_cases/submit_profile_use_case.dart';
 import '../../domain/use_cases/update_profile_use_case.dart';
 import '../../domain/use_cases/show_profile_use_case.dart';
-import '../../../../core/errors/failures.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState>
 {

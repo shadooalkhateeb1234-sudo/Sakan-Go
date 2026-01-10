@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
-
-import '../../../../core/assets_manager/icons_manager.dart';
+import '../../../../core/assets manager/icons_manager.dart';
 import '../../../../core/localization/app_localizations.dart';
-import '../../../../core/routing/route_name.dart';
+import '../../../../core/routing/routes_name.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
@@ -165,26 +163,26 @@ class _OtpPageState extends State<OtpPage> {
 
                         const SizedBox(height: 32),
 
-                        PinCodeTextField(
-                          appContext: context,
-                          length: 6,
-                          controller: _otpController,
-                          keyboardType: TextInputType.number,
-                          animationType: AnimationType.scale,
-                          enableActiveFill: false,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          pinTheme: PinTheme
-                            (
-                            shape: PinCodeFieldShape.circle,
-                            fieldHeight: 50,
-                            fieldWidth: 50,
-                            activeColor: Theme.of(context).colorScheme.primary,
-                            selectedColor:
-                            Theme.of(context).colorScheme.primary,
-                            inactiveColor: Colors.grey,
-                          ),
-                          onChanged: (_) {},
-                        ),
+                        // PinCodeTextField(
+                        //   appContext: context,
+                        //   length: 6,
+                        //   controller: _otpController,
+                        //   keyboardType: TextInputType.number,
+                        //   animationType: AnimationType.scale,
+                        //   enableActiveFill: false,
+                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //   pinTheme: PinTheme
+                        //     (
+                        //     shape: PinCodeFieldShape.circle,
+                        //     fieldHeight: 50,
+                        //     fieldWidth: 50,
+                        //     activeColor: Theme.of(context).colorScheme.primary,
+                        //     selectedColor:
+                        //     Theme.of(context).colorScheme.primary,
+                        //     inactiveColor: Colors.grey,
+                        //   ),
+                        //   onChanged: (_) {},
+                        // ),
 
                         const SizedBox(height: 20),
 

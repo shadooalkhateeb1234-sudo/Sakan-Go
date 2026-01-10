@@ -1,5 +1,4 @@
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 
 class WaveHeader extends StatelessWidget
 {
@@ -12,7 +11,7 @@ class WaveHeader extends StatelessWidget
 
     return ClipPath
     (
-        clipper: OvalBottomBorderClipper(),
+       // clipper: OvalBottomBorderClipper(),
         child: Container
         (
             height: 230,

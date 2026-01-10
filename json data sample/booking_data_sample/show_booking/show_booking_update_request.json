@@ -1,0 +1,27 @@
+{
+  "name": "Show Booking Update Request",
+  "method": "GET",
+  "route": "/booking/showBookingUpdateRequest/{booking_update_request_id}",
+  "headers": {
+    "Authorization": "Bearer {user_token}",
+    "Accept": "application/json"
+  },
+  "body": null,
+  "success_response": {
+    "status": true,
+    "data": {
+      "id": 1,
+      "booking_id": 2,
+      "status": "pending",
+      "update_start_date": "2025-02-11",
+      "update_end_date": "2025-02-13"
+    },
+    "code": 200
+  },
+  "error_responses": [
+    {
+      "status": 404,
+      "message": "booking update request not found"
+    }
+  ]
+}

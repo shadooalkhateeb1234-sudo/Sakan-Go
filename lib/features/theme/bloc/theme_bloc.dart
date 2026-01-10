@@ -1,11 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'dart:async';
 
-import 'package:sakan_go_mobile_app/features/theme/domain/use_cases/save_theme_use_case.dart';
-import 'package:sakan_go_mobile_app/features/theme/domain/use_cases/get_theme_use_case.dart';
-import 'package:sakan_go_mobile_app/features/theme/domain/entities/theme_entity.dart';
-import 'package:sakan_go_mobile_app/features/theme/bloc/theme_state.dart';
-import 'package:sakan_go_mobile_app/features/theme/bloc/theme_event.dart';
+import 'package:sakan_go/features/theme/bloc/theme_event.dart';
+import 'package:sakan_go/features/theme/bloc/theme_state.dart';
+
+import '../domain/entities/theme_entity.dart';
+import '../domain/use_cases/get_theme_use_case.dart';
+import '../domain/use_cases/save_theme_use_case.dart';
 
 class ThemeBloc extends Bloc<ThemeEvent, ThemeState>
 {

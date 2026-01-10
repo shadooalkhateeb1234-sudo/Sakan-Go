@@ -1,0 +1,24 @@
+{
+  "name": "Get Apartment Average Rating",
+  "method": "GET",
+  "route": "/review/apartmentAverageRating/{apartment_id}",
+  "headers": {
+    "Authorization": "Bearer {user_token}",
+    "Accept": "application/json"
+  },
+  "body": null,
+  "success_response": {
+    "status": true,
+    "message": "review fetched successfully",
+    "data": {
+      "average_rating": 4.5
+    },
+    "code": 200
+  },
+  "error_responses": [
+    {
+      "status": 404,
+      "message": "No such apartment"
+    }
+  ]
+}

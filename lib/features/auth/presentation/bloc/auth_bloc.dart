@@ -1,11 +1,10 @@
 import 'package:bloc/bloc.dart';
-
+import '../../../../core/error/failures.dart';
 import '../../domain/use_cases/send_phone_otp_use_case.dart';
 import '../../domain/use_cases/resend_phone_otp_use_case.dart';
 import '../../domain/use_cases/verify_phone_otp_use_case.dart';
 import '../../domain/use_cases/refresh_token_use_case.dart';
 import '../../domain/use_cases/logout_use_case.dart';
-import '../../../../core/errors/failures.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 

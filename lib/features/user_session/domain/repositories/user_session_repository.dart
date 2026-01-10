@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
-
-import '../../../../core/errors/failures.dart';
+import '../../../../core/error/failures.dart';
 import '../entities/user_session_entity.dart';
 
 abstract class UserSessionRepository

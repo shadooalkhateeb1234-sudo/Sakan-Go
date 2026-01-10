@@ -1,11 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'dart:async';
-
-import 'package:sakan_go_mobile_app/features/language/domain/use_cases/save_language_use_case.dart';
-import 'package:sakan_go_mobile_app/features/language/domain/use_cases/get_language_use_case.dart';
-import 'package:sakan_go_mobile_app/features/language/domain/entities/language_entity.dart';
-import 'package:sakan_go_mobile_app/features/language/bloc/language_event.dart';
-import 'package:sakan_go_mobile_app/features/language/bloc/language_state.dart';
+import '../domain/entities/language_entity.dart';
+import '../domain/use_cases/get_language_use_case.dart';
+import '../domain/use_cases/save_language_use_case.dart';
+import 'language_event.dart';
+import 'language_state.dart';
 
 class LanguageBloc extends Bloc<LanguageEvent, LanguageState>
 {

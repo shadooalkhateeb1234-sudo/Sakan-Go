@@ -1,15 +1,13 @@
-// import '../../../Review/domain/entities/review_entity.dart';
-//
-// class RateApartmentUseCase {
-//   late final RatingRepository repository;
-//
-//   Future<void> call(ReviewEntity rating) async {
-//     await repository.addRating(rating);
-//   }
-// }
-//
-// class RatingRepository {
-//   RatingRepository();
-//   Future<void> addRating(ReviewEntity rating) async {}
-//
-// }
+import '../entities/apartment_rating_entity.dart';
+import '../repositories/review_repository.dart';
+
+class GetApartmentAverageRatingUseCase {
+  final ReviewRepository repository;
+
+  GetApartmentAverageRatingUseCase(this.repository);
+
+  Future<ApartmentRatingEntity> call(int apartmentId) {
+    return repository.getApartmentAverageRating(apartmentId);
+  }
+}
+

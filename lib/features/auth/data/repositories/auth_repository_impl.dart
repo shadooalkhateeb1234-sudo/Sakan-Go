@@ -1,15 +1,14 @@
 import 'package:dartz/dartz.dart';
-
-import 'package:sakan_go_mobile_app/features/user_session/data/local/data_sources/user_session_local_data_source.dart';
-import 'package:sakan_go_mobile_app/features/auth/domain/entities/auth_entity.dart';
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failures.dart';
+import '../../../user_session/data/local/data_sources/user_session_local_data_source.dart';
 import '../../../user_session/data/local/models/user_session_model.dart';
 import '../../../user_session/domain/entities/user_session_entity.dart';
-import 'package:sakan_go_mobile_app/core/errors/exceptions.dart';
+import '../../domain/entities/auth_entity.dart';
 import '../remote/data_sources/verify_phone_otp_response.dart';
 import '../remote/data_sources/auth_remote_data_source.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../../../core/network/network_info.dart';
-import '../../../../core/errors/failures.dart';
 
 class AuthRepositoryImpl implements AuthRepository
 {

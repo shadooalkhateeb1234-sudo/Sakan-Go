@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -28,6 +27,7 @@ class AppLocalizations
       return MapEntry(key, value.toString());
     });
   }
+
   String translate(String key) => _localizedStrings[key] ?? "";
 }
 
@@ -35,6 +35,7 @@ class AppLocalizations
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations>
 {
   const _AppLocalizationsDelegate();
+
   @override
   bool isSupported(Locale locale)
   {

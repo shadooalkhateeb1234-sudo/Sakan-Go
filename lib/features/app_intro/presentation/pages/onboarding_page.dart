@@ -1,10 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
-
+import '../../../../core/assets manager/images_manager.dart';
 import '../../../../core/localization/app_localizations.dart';
-import '../../../../core/assets_manager/images_manager.dart';
-import '../../../../core/routing/route_name.dart';
+import '../../../../core/routing/routes_name.dart';
 import '../bloc/onboarding/onboarding_event.dart';
 import '../bloc/onboarding/onboarding_state.dart';
 import '../widgets/onboarding_action_button.dart';

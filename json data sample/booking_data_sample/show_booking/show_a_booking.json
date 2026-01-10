@@ -1,0 +1,29 @@
+{
+  "name": "Show A Book",
+  "method": "GET",
+  "route": "/booking/showAbook/{booking_id}",
+  "headers": {
+    "Authorization": "Bearer {user_token}",
+    "Accept": "application/json"
+  },
+  "body": null,
+  "success_response": {
+    "status": true,
+    "data": {
+      "id": 2,
+      "user_id": 12,
+      "apartment_id": 2,
+      "start_date": "2025-02-10",
+      "end_date": "2025-02-12",
+      "total_price": 800000,
+      "status": "pending"
+    },
+    "code": 200
+  },
+  "error_responses": [
+    {
+      "status": 404,
+      "message": "the booking not found"
+    }
+  ]
+}

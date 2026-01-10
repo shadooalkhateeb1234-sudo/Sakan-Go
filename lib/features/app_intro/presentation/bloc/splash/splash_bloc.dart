@@ -1,8 +1,7 @@
 import 'package:bloc/bloc.dart';
-
-import 'package:sakan_go_mobile_app/features/app_intro/presentation/bloc/splash/splash_decision.dart';
-import 'package:sakan_go_mobile_app/features/app_intro/presentation/bloc/splash/splash_event.dart';
-import 'package:sakan_go_mobile_app/features/app_intro/presentation/bloc/splash/splash_state.dart';
+import 'package:sakan_go/features/app_intro/presentation/bloc/splash/splash_decision.dart';
+import 'package:sakan_go/features/app_intro/presentation/bloc/splash/splash_event.dart';
+import 'package:sakan_go/features/app_intro/presentation/bloc/splash/splash_state.dart';
 import '../../../../user_session/domain/use_cases/get_user_session_use_case.dart';
 import '../../../../user_session/domain/entities/user_session_entity.dart';
 

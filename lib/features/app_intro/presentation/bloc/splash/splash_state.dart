@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
-
-import 'package:sakan_go_mobile_app/features/app_intro/presentation/bloc/splash/splash_decision.dart';
+import 'package:sakan_go/features/app_intro/presentation/bloc/splash/splash_decision.dart';
 
 abstract class SplashState extends Equatable
 {

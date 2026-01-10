@@ -1,4 +1,4 @@
-import 'package:sakan_go_mobile_app/features/theme/domain/entities/theme_entity.dart';
+import '../../domain/entities/theme_entity.dart';
 import '../../domain/repositories/theme_repository.dart';
 import '../local/theme_local_data_source.dart';
 

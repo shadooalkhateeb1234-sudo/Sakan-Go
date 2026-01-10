@@ -1,5 +1,5 @@
-import 'package:sakan_go_mobile_app/features/language/domain/repositories/language_repository.dart';
 import '../entities/language_entity.dart';
+import '../repositories/language_repository.dart';
 
 class GetLanguageUseCase
 {

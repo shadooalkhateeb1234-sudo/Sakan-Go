@@ -1,0 +1,10 @@
+{
+  "notification": {
+    "title": "Booking update request",
+    "body": "User requested to update booking dates"
+  },
+  "data": {
+    "type": "booking_update",
+    "update_id": "5"
+  }
+}
