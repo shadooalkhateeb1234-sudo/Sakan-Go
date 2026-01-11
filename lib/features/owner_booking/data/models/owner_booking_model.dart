@@ -16,10 +16,11 @@ class OwnerBookingModel extends OwnerBookingEntity {
       id: json['id'],
       user_id: json['user_id'],
       apartment_id: json['apartment_id'],
-      startDate: json['start_date'],
-      endDate: json['end_date'],
+      startDate: DateTime.parse(json['start_date']),
+      endDate: DateTime.parse(json['end_date']),
       totalPrice: json['total_price'],
       status: json['status'],
     );
   }
 }
+

@@ -315,15 +315,6 @@ Future<void> init() async
          // userSessionLocalDataSource: di(),
         ),
   );
-// Bloc
-   di.registerFactory(() => OwnerBookingBloc(
-     getBookings: di(),
-     approve: di(),
-     reject: di(),
-     getRequests: di(),
-     approveUpdateRequest: di(),
-     rejectUpdateRequest: di(),
-));
 
 // UseCases
     di.registerLazySingleton(() => GetOwnerBookings(di()));
@@ -332,6 +323,18 @@ Future<void> init() async
     di.registerLazySingleton(() => GetOwnerUpdateRequests(di()));
     di.registerLazySingleton(() => ApproveUpdateRequest(di()));
     di.registerLazySingleton(() => RejectUpdateRequest(di()));
+
+  // Bloc
+  di.registerFactory(() => OwnerBookingBloc(
+    getBookings: di(),
+    approveUpdateRequest: di(),
+    rejectUpdateRequest: di(),
+    approveBooking: di(),
+    rejectBooking: di(),
+    getUpdateRequests: di(),
+
+  ));
+
 
 
 }

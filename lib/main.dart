@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/firebase/firebase_initialize.dart';
 import 'core/localization/app_localizations.dart';
 import 'core/notifications/firebase_notification_service.dart';
@@ -22,7 +23,7 @@ void main() async {
   await FirebaseInitialize.initialize();
   await NotificationsInitialize.initialize();
   //هي لازم بعد ال login
- // await FirebaseNotificationService.instance.init(context);
+  //await FirebaseNotificationService.instance.init(context);
 
   await  init();
   runApp(const MyApp());
@@ -33,21 +34,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return MultiBlocProvider(
-    //   providers: [
-    //     BlocProvider(
-    //       create: (_) => di<ThemeBloc>()..add(GetThemeEvent()),
-    //     ),
-    //   ],
-    //   child: MaterialApp.router(
-    //     debugShowCheckedModeBanner: false,
-    //     routerConfig: AppRouter.appRouter,
-    //     theme: AppTheme.light,
-    //     darkTheme: AppTheme.dark,
-    //     themeMode: ThemeMode.light, // مؤقت
-    //   ),
-    // );
-
 
    return MultiBlocProvider
       (
@@ -85,9 +71,9 @@ class MyApp extends StatelessWidget {
                         localizationsDelegates: const
                         [
                           AppLocalizations.delegate,
-                          // GlobalMaterialLocalizations.delegate,
-                          // GlobalWidgetsLocalizations.delegate,
-                          // GlobalCupertinoLocalizations.delegate
+                          GlobalMaterialLocalizations.delegate,
+                          GlobalWidgetsLocalizations.delegate,
+                          GlobalCupertinoLocalizations.delegate
                         ],
 
                         theme: AppTheme.light,
@@ -101,3 +87,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

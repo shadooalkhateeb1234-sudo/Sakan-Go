@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/booking/presentation/widgets/booking_permissions.dart';
 import '../../features/owner_booking/presentation/manager/owner_booking_bloc.dart';
-import '../../features/owner_booking/presentation/pages/owner_booking_requests_page.dart';
+import '../../features/owner_booking/presentation/pages/owner_booking_tabs_page.dart';
 import '../injector/injection_container.dart';
 // ===== AUTH / INTRO =====
 import '../../features/app_intro/presentation/pages/splash_page.dart';

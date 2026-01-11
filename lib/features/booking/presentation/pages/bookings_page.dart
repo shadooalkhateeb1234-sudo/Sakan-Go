@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:sakan_go/core/localization/app_localizations.dart';
 import '../manager/booking_bloc.dart';
 import '../manager/booking_state.dart';
 import '../widgets/bookings_list.dart';
@@ -32,17 +33,17 @@ class _BookingsPageState extends State<BookingsPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Bookings'),
-        bottom: TabBar(
-          controller: controller,
-          tabs: const [
-            Tab(text: 'Pending'),
-            Tab(text: 'Confirmed'),
-            Tab(text: 'Completed'),
-            Tab(text: 'Cancelled'),
-            Tab(text: 'Rejected'),
-          ],
-        ),
+      title: Text('my_bookings'.tr(context)),
+      bottom: TabBar(
+        controller: controller,
+        tabs: [
+          Tab(text: 'pending'.tr(context)),
+          Tab(text: 'confirmed'.tr(context)),
+          Tab(text: 'completed'.tr(context)),
+          Tab(text: 'cancelled'.tr(context)),
+          Tab(text: 'rejected'.tr(context)),
+        ],
+      ),
       ),
       body: BlocBuilder<BookingBloc, BookingState>(
         builder: (_, state) {

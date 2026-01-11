@@ -19,3 +19,9 @@ class ServerException implements Exception {}
 class CacheException implements Exception {}
 
 class UnexpectedException implements Exception {}
+
+class BadRequestException implements Exception {}
+
+class ConflictException implements Exception {}
+
+class InvalidInputException implements Exception {}

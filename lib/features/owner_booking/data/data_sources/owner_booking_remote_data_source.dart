@@ -9,6 +9,7 @@ import '../../../user_session/data/local/data_sources/user_session_local_data_so
 import '../../domain/entities/owner_booking_entity.dart';
 import '../models/owner_booking_model.dart';
 
+
 abstract class OwnerBookingRemoteDataSource {
   Future<List<OwnerBookingEntity>> getOwnerBookings();
   Future<void> approveBooking(int bookingId);
@@ -18,25 +19,27 @@ abstract class OwnerBookingRemoteDataSource {
   Future<void> approveUpdateRequest(int requestId);
   Future<void> rejectUpdateRequest(int requestId);
 }
-class OwnerBookingRemoteDataSourceImpl implements OwnerBookingRemoteDataSource {
 
+class OwnerBookingRemoteDataSourceImpl
+    implements OwnerBookingRemoteDataSource {
   final http.Client client;
   final UserSessionLocalDataSource userSessionLocalDataSource;
 
   OwnerBookingRemoteDataSourceImpl({
     required this.client,
     required this.userSessionLocalDataSource,
-   });
+  });
 
   Future<Map<String, String>> _headers() async {
     final session = await userSessionLocalDataSource.getUserSession();
     if (session.token == null || session.token!.isEmpty) {
-      throw UnAuthorizedFailure();
+      throw UnAuthorizedException();
     }
+
     return {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${session.token}', // 'Bearer ${session.token}'
+      'Authorization': 'Bearer ${session.token}',
     };
   }
 
@@ -49,24 +52,24 @@ class OwnerBookingRemoteDataSourceImpl implements OwnerBookingRemoteDataSource {
 
     final body = json.decode(response.body);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 && body['status'] == true) {
       return (body['data'] as List)
           .map((e) => OwnerBookingModel.fromJson(e))
           .toList();
     }
 
-    throw ServerException();
+    _handleResponse(response);
+    return [];
   }
 
-  Future<void> approveBooking(int booking_id) async {
+  @override
+  Future<void> approveBooking(int bookingId) async {
     final response = await client.get(
-      Uri.parse('${ApiEndpoints.approveAbooke}/$booking_id'),
+      Uri.parse('${ApiEndpoints.approveAbooke}/$bookingId'),
       headers: await _headers(),
     );
 
-    if (response.statusCode != 200) {
-      throw ServerException();
-    }
+    _handleResponse(response);
   }
 
 
@@ -76,49 +79,67 @@ class OwnerBookingRemoteDataSourceImpl implements OwnerBookingRemoteDataSource {
       Uri.parse('${ApiEndpoints.rejectAbook}/$bookingId'),
       headers: await _headers(),
     );
-    if (response.statusCode != 200) {
-      throw ServerException();
-    }
+
+    _handleResponse(response);
   }
 
   @override
   Future<List<BookingUpdateRequestEntity>> getUpdateRequests() async {
     final response = await client.get(
-      Uri.parse( ApiEndpoints.OwnerBookingUpdateRequests),
+      Uri.parse(ApiEndpoints.OwnerBookingUpdateRequests),
       headers: await _headers(),
     );
 
     final body = json.decode(response.body);
 
-    return (body['data'] as List)
-        .map((e) => BookingUpdateRequestModel.fromJson(e))
-        .toList();
-  }
+    if (response.statusCode == 200 && body['status'] == true) {
+      return (body['data'] as List)
+          .map((e) => BookingUpdateRequestModel.fromJson(e))
+          .toList();
+    }
 
+    throw ServerException();
+  }
 
   @override
   Future<void> approveUpdateRequest(int requestId) async {
     final response = await client.get(
-      Uri.parse('${ApiEndpoints.approveBookingUpdateRequest}/$requestId'),
+      Uri.parse(
+          '${ApiEndpoints.approveBookingUpdateRequest}/$requestId'),
       headers: await _headers(),
     );
 
-    if (response.statusCode != 200) {
-      throw ServerException();
-    }
+    _handleResponse(response);
   }
-
 
   @override
   Future<void> rejectUpdateRequest(int requestId) async {
     final response = await client.get(
       Uri.parse(
-        '${ApiEndpoints.rejectBookingUpdateRequest}/$requestId',
-      ),
+          '${ApiEndpoints.rejectBookingUpdateRequest}/$requestId'),
       headers: await _headers(),
     );
-    if (response.statusCode != 200) {
+
+    _handleResponse(response);
+  }
+}
+Future<void> _handleResponse(http.Response response) {
+  switch (response.statusCode) {
+    case 200:
+      return Future.value(null);
+    case 401:
+      throw UnAuthorizedException();
+    case 403:
+      throw ForbiddenException();
+    case 404:
+      throw NotFoundException();
+    case 409:
+      throw ConflictException();
+    case 422:
+      throw UnprocessableEntityException();
+    case 500:
       throw ServerException();
-    }
+    default:
+      throw UnexpectedException();
   }
 }

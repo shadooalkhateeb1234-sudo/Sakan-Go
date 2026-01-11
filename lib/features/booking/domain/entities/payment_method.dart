@@ -13,12 +13,13 @@ extension PaymentMethodX on PaymentMethod {
     }
   }
 
-  String get label {
+  /// localization key
+  String get labelKey {
     switch (this) {
       case PaymentMethod.creditCard:
-        return 'Credit Card';
+        return 'credit_card';
       case PaymentMethod.wallet:
-        return 'Wallet';
+        return 'wallet';
     }
   }
 }

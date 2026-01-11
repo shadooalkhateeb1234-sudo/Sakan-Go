@@ -1,55 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sakan_go/core/localization/app_localizations.dart';
 import '../../../booking/domain/entities/booking_update_request_entity.dart';
 import '../manager/owner_booking_bloc.dart';
 
-class OwnerUpdateRequestsPage extends StatefulWidget {
+
+class OwnerUpdateRequestsPage extends StatelessWidget {
   const OwnerUpdateRequestsPage({super.key});
 
   @override
-  State<OwnerUpdateRequestsPage> createState() =>
-      _OwnerUpdateRequestsPageState();
-}
-
-class _OwnerUpdateRequestsPageState extends State<OwnerUpdateRequestsPage> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<OwnerBookingBloc>().add(
-      LoadOwnerUpdateRequests(),
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Update Requests')),
-      body: BlocBuilder<OwnerBookingBloc, OwnerBookingState>(
-        builder: (context, state) {
-          if (state is OwnerUpdateLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
+    return BlocBuilder<OwnerBookingBloc, OwnerBookingState>(
+      builder: (context, state) {
+        if (state is OwnerUpdateLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-          if (state is OwnerUpdateLoaded) {
-            if (state.requests.isEmpty) {
-              return const Center(child: Text('No update requests'));
-            }
-
-            return ListView.builder(
-              padding: const EdgeInsets.all(12),
-              itemCount: state.requests.length,
-              itemBuilder: (_, i) =>
-                  _UpdateRequestCard(request: state.requests[i]),
+        if (state is OwnerUpdateLoaded) {
+          if (state.requests.isEmpty) {
+            return Center(
+              child: Text('no_update_requests'.tr(context)),
             );
           }
 
-          if (state is OwnerUpdateError) {
-            return Center(child: Text(state.message));
-          }
+          return ListView.builder(
+            padding: const EdgeInsets.all(12),
+            itemCount: state.requests.length,
+            itemBuilder: (_, i) =>
+                _UpdateRequestCard(request: state.requests[i]),
+          );
+        }
 
-          return const SizedBox.shrink();
-        },
-      ),
+        if (state is OwnerUpdateError) {
+          return Center(child: Text(state.message));
+        }
+
+        return const SizedBox.shrink();
+      },
     );
   }
 }
@@ -96,7 +83,7 @@ class _UpdateRequestCard extends StatelessWidget {
 
             /// BOOKING ID
             Text(
-              'Booking #${request.booking_id}',
+              '${'booking'.tr(context)} #${request.booking_id}',
               style: Theme.of(context).textTheme.titleMedium,
             ),
 
@@ -104,7 +91,7 @@ class _UpdateRequestCard extends StatelessWidget {
 
             /// DATE RANGE
             Text(
-              'New dates:',
+              'new_dates'.tr(context),
               style: Theme.of(context).textTheme.bodySmall,
             ),
             const SizedBox(height: 4),
@@ -120,8 +107,8 @@ class _UpdateRequestCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton.icon(
-                  icon: const Icon(Icons.close, color: Colors.red),
-                  label: const Text('Reject'),
+                  icon: Icon(Icons.close, color: scheme.error),
+                  label: Text('reject'.tr(context)),
                   onPressed: () {
                     context.read<OwnerBookingBloc>().add(
                       RejectUpdateRequestEvent(request.id),
@@ -131,8 +118,10 @@ class _UpdateRequestCard extends StatelessWidget {
                 const SizedBox(width: 8),
                 ElevatedButton.icon(
                   icon: const Icon(Icons.check),
-                  label: const Text('Approve'),
-                  onPressed: () {
+                  label: Text('approve'.tr(context)),
+                  onPressed: request.status != 'pending'
+                      ? null
+                      : () {
                     context.read<OwnerBookingBloc>().add(
                       ApproveUpdateRequestEvent(request.id),
                     );

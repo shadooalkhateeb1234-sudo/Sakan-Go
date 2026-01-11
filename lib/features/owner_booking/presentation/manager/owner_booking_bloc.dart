@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import '../../../../core/error/failures.dart';
 import '../../../booking/domain/entities/booking_update_request_entity.dart';
 import '../../domain/entities/owner_booking_entity.dart';
 import '../../domain/use_cases/get_owner_update_requests.dart';
@@ -12,98 +13,133 @@ import '../../domain/use_cases/owner_reject_update_request.dart';
 part 'owner_booking_event.dart';
 part 'owner_booking_state.dart';
 
-
-class OwnerBookingBloc
-    extends Bloc<OwnerBookingEvent, OwnerBookingState> {
+class OwnerBookingBloc extends Bloc<OwnerBookingEvent, OwnerBookingState> {
   final GetOwnerBookings getBookings;
-  final ApproveBooking approve;
-  final RejectBooking reject;
-  final GetOwnerUpdateRequests getRequests;
+  final ApproveBooking approveBooking;
+  final RejectBooking rejectBooking;
+  final GetOwnerUpdateRequests getUpdateRequests;
   final ApproveUpdateRequest approveUpdateRequest;
   final RejectUpdateRequest rejectUpdateRequest;
 
   OwnerBookingBloc({
     required this.getBookings,
-    required this.approve,
-    required this.reject,
-    required this.getRequests,
+    required this.approveBooking,
+    required this.rejectBooking,
+    required this.getUpdateRequests,
     required this.approveUpdateRequest,
     required this.rejectUpdateRequest,
   }) : super(OwnerBookingInitial()) {
-    on<LoadOwnerBookings>(_onLoad);
-    on<ApproveBookingEvent>(_onApprove);
-    on<RejectBookingEvent>(_onReject);
-    on<LoadOwnerUpdateRequests>(_onLoadUpdate);
-    on<ApproveUpdateRequestEvent>(_onApproveUpdate);
-    on<RejectUpdateRequestEvent>(_onRejectUpate);
+    on<LoadOwnerBookings>(_loadBookings);
+    on<ApproveBookingEvent>(_approveBooking);
+    on<RejectBookingEvent>(_rejectBooking);
+    on<LoadOwnerUpdateRequests>(_loadUpdateRequests);
+    on<ApproveUpdateRequestEvent>(_approveUpdateRequest);
+    on<RejectUpdateRequestEvent>(_rejectUpdateRequest);
   }
 
-  Future<void> _onLoad(LoadOwnerBookings event, Emitter emit) async {
+  /* ---------------- Bookings ---------------- */
+
+  Future<void> _loadBookings(
+      LoadOwnerBookings event, Emitter emit) async {
     emit(OwnerBookingLoading());
-    try {
-      final data = await getBookings();
-      emit(OwnerBookingLoaded(data));
-    } catch (_) {
-      emit(const OwnerBookingError('Failed to load bookings'));
-    }
+
+    final result = await getBookings();
+
+    result.fold(
+          (failure) =>
+          emit(OwnerBookingError(_mapFailureToMessage(failure))),
+          (bookings) => emit(OwnerBookingLoaded(bookings)),
+    );
   }
 
-  // Future<void> _onApprove(ApproveBookingEvent event, Emitter emit) async {
-  //   await approve(event.id);
-  //   add(LoadOwnerBookings());
-  //   /// 🔔 Backend will send notification to USER
-  //   emit(OwnerBookingActionSuccess());
-  // }
-  Future<void> _onApprove(
-      ApproveBookingEvent event,
-      Emitter emit,
-      ) async {
-    try {
-      emit(OwnerBookingActionLoading());
-      await approve(event.id);
-      final data = await getBookings();
-      emit(OwnerBookingLoaded(data));
-    } catch (_) {
-      emit(const OwnerBookingError('Action failed'));
-    }
+  Future<void> _approveBooking(
+      ApproveBookingEvent event, Emitter emit) async {
+    emit(OwnerBookingActionLoading());
+
+    final result = await approveBooking(event.id);
+
+    await result.fold(
+          (failure) async =>
+          emit(OwnerBookingError(_mapFailureToMessage(failure))),
+          (_) async => add(LoadOwnerBookings()),
+    );
   }
 
+  Future<void> _rejectBooking(
+      RejectBookingEvent event, Emitter emit) async {
+    emit(OwnerBookingActionLoading());
 
+    final result = await rejectBooking(event.id);
 
-  Future<void> _onReject(RejectBookingEvent event, Emitter emit) async {
-    await reject(event.id);
-    add(LoadOwnerBookings());
-    /// 🔔 Backend will send notification to USER
-    emit(OwnerBookingActionSuccess());
+    await result.fold(
+          (failure) async =>
+          emit(OwnerBookingError(_mapFailureToMessage(failure))),
+          (_) async => add(LoadOwnerBookings()),
+    );
   }
 
+  /* ---------------- Update Requests ---------------- */
 
-
-  Future<void> _onLoadUpdate(LoadOwnerUpdateRequests event,
-      Emitter emit) async {
+  Future<void> _loadUpdateRequests(
+      LoadOwnerUpdateRequests event, Emitter emit) async {
     emit(OwnerUpdateLoading());
 
-    try {
-      final data = await getRequests();
-      emit(OwnerUpdateLoaded(data));
-    } catch (_) {
-      emit(const OwnerUpdateError('Failed to load update requests'));
+    final result = await getUpdateRequests();
+
+    result.fold(
+          (failure) =>
+          emit(OwnerUpdateError(_mapFailureToMessage(failure))),
+          (requests) => emit(OwnerUpdateLoaded(requests)),
+    );
+  }
+
+  Future<void> _approveUpdateRequest(
+      ApproveUpdateRequestEvent event, Emitter emit) async {
+    emit(OwnerBookingActionLoading());
+
+    final result = await approveUpdateRequest(event.requestId);
+
+    await result.fold(
+          (failure) async =>
+          emit(OwnerUpdateError(_mapFailureToMessage(failure))),
+          (_) async => add(LoadOwnerUpdateRequests()),
+    );
+  }
+
+  Future<void> _rejectUpdateRequest(
+      RejectUpdateRequestEvent event, Emitter emit) async {
+    emit(OwnerBookingActionLoading());
+
+    final result = await rejectUpdateRequest(event.requestId);
+
+    await result.fold(
+          (failure) async =>
+          emit(OwnerUpdateError(_mapFailureToMessage(failure))),
+          (_) async => add(LoadOwnerUpdateRequests()),
+    );
+  }
+
+  /* ---------------- Failure Mapper ---------------- */
+
+
+  String _mapFailureToMessage(Failure failure) {
+    switch (failure.runtimeType) {
+      case NetworkFailure:
+        return 'No internet connection';
+      case UnAuthorizedFailure:
+        return 'Session expired, please login again';
+      case ForbiddenFailure:
+        return 'You are not allowed to perform this action';
+      case NotFoundFailure:
+        return 'Resource not found';
+      case ConflictFailure:
+        return 'Conflict occurred, please refresh';
+      case UnprocessableEntityFailure:
+        return 'Invalid data provided';
+      case ServerFailure:
+        return 'Server error, try again later';
+      default:
+        return 'Unexpected error occurred';
     }
-  }
-
-  Future<void> _onApproveUpdate(ApproveUpdateRequestEvent event,
-      Emitter emit) async {
-    await approveUpdateRequest(event.requestId);
-    add(LoadOwnerUpdateRequests());
-    /// 🔔 Backend will send notification to USER
-    emit(OwnerBookingActionSuccess());
-  }
-
-  Future<void> _onRejectUpate(RejectUpdateRequestEvent event,
-      Emitter emit) async {
-    await rejectUpdateRequest(event.requestId);
-    add(LoadOwnerUpdateRequests());
-    /// 🔔 Backend will send notification to USER
-    emit(OwnerBookingActionSuccess());
   }
 }

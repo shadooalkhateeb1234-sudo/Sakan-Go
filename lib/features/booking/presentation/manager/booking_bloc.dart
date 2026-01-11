@@ -2,7 +2,6 @@ import '../../domain/use_cases/create_booking_usecase.dart';
 import '../../domain/use_cases/cancel_booking_usecase.dart';
 import '../../domain/use_cases/reject_booking_usecase.dart';
 import '../../domain/use_cases/request_booking_update.dart';
-import '../../domain/use_cases/update_booking_usecase.dart';
 import '../../domain/use_cases/get_bookings_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc/bloc.dart';
@@ -14,7 +13,6 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
   final CreateBookingUseCase createBooking;
   final CancelBookingUseCase cancelBooking;
   final GetUserBookingsUsecase getUserBookings;
-  //final UpdateBookingUseCase updateBooking;
   final RejectBookingUseCase rejectBooking;
   final RequestBookingUpdateUseCase requestBookingUpdate;
 
@@ -22,7 +20,6 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     required this.createBooking,
     required this.cancelBooking,
     required this.getUserBookings,
-   // required this.updateBooking,
     required this.rejectBooking,
     required this.requestBookingUpdate,
 
@@ -30,7 +27,6 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     on<GetUserBookingsEvent>(_onGetBookings);
     on<CreateBookingEvent>(_onCreateBooking);
     on<CancelBookingEvent>(_onCancelBooking);
-   // on<UpdateBookingEvent>(_onUpdateBooking);
     on<RejectBookingEvent>(_onRejectBooking);
     on<RequestBookingUpdateEvent>(_onRequestBookingUpdate);
   }
@@ -99,31 +95,6 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
       },
     );
   }
-
-  // Future<void> _onUpdateBooking(
-  //     UpdateBookingEvent event,
-  //     Emitter<BookingState> emit,
-  //     ) async {
-  //   emit(BookingLoading());
-  //
-  //   final result = await updateBooking(
-  //     booking_id: event.booking_id,
-  //     newStart: event.start_date,
-  //     newEnd: event.end_date,
-  //     paymentMethod: event.paymentMethod,
-  //   );
-  //
-  //   result.fold(
-  //         (failure) => emit(
-  //       BookingError(failure.message),
-  //     ),
-  //         (_) {
-  //       emit(const BookingActionSuccess('edit the booking'));
-  //       add(GetUserBookingsEvent());
-  //     },
-  //   );
-  //
-  // }
 
   Future<void> _onRequestBookingUpdate(
       RequestBookingUpdateEvent event,

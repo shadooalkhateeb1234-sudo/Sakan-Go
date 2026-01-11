@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sakan_go/core/localization/app_localizations.dart';
 import '../../../../core/location/location_service.dart';
 import '../../../../core/widget/location_preview_map.dart';
 import '../../domain/entities/payment_method.dart';
@@ -55,24 +56,25 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
   }
 
   // ================= SUBMIT =================
+  // ================= SUBMIT =================
   void _submit() {
     if (startDate == null || endDate == null) {
-      _showError('Please select start and end dates');
+      _showError('select_dates_error'.tr(context));
       return;
     }
 
     if (endDate!.isBefore(startDate!)) {
-      _showError('End date must be after start date');
+      _showError('end_date_error'.tr(context));
       return;
     }
 
     if (latitude == null || longitude == null) {
-      _showError('Please allow location access');
+      _showError('location_required'.tr(context));
       return;
     }
 
     if (selectedPayment == null) {
-      _showError('Please select payment method');
+      _showError('payment_required'.tr(context));
       return;
     }
 
@@ -97,7 +99,7 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Create Booking')),
+      appBar: AppBar(title: Text('create_booking'.tr(context))),
       body: BlocConsumer<BookingBloc, BookingState>(
         listener: (_, state) {
           if (state is BookingActionSuccess) {
@@ -122,9 +124,10 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
               children: [
                 // ================= DATES =================
                 ListTile(
-                  title: const Text('Start Date'),
-                  subtitle:
-                  Text(startDate?.toString().split(' ').first ?? 'Select'),
+                  title: Text('start_date'.tr(context)),
+                  subtitle: Text(
+                  startDate?.toString().split(' ').first ?? 'select'.tr(context),
+                  ),
                   onTap: () async {
                     final d = await showDatePicker(
                       context: context,
@@ -137,9 +140,10 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
                   },
                 ),
                 ListTile(
-                  title: const Text('End Date'),
-                  subtitle:
-                  Text(endDate?.toString().split(' ').first ?? 'Select'),
+                  title: Text('end_date'.tr(context)),
+                  subtitle: Text(
+                    endDate?.toString().split(' ').first ?? 'select'.tr(context),
+                  ),
                   onTap: () async {
                     final d = await showDatePicker(
                       context: context,
@@ -157,31 +161,31 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(12),
                       child: Text(
-                        'Total Price: $totalPrice',
+                        '${'total_price_label'.tr(context)}: $totalPrice',
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ),
                   ),
 
+
                 const SizedBox(height: 16),
 
                 // ================= LOCATION =================
                 Text(
-                  'Your Location',
+                  'your_location'.tr(context),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                const SizedBox(height: 8),
 
+                const SizedBox(height: 8),
                 ElevatedButton.icon(
                   icon: loadingLocation
                       ? const SizedBox(
                     width: 16,
                     height: 16,
-                    child:
-                    CircularProgressIndicator(strokeWidth: 2),
+                    child: CircularProgressIndicator(strokeWidth: 2),
                   )
                       : const Icon(Icons.location_on),
-                  label: const Text('Allow Location Access'),
+                  label: Text('allow_location'.tr(context)),
                   onPressed: loadingLocation ? null : _getLocation,
                 ),
 
@@ -197,14 +201,14 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
 
                 // ================= PAYMENT =================
                 Text(
-                  'Payment Method',
+                  'payment_method'.tr(context),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 8),
 
                 ...PaymentMethod.values.map(
                       (method) => RadioListTile<PaymentMethod>(
-                    title: Text(method.label),
+                    title: Text(method.labelKey.tr(context)),
                     value: method,
                     groupValue: selectedPayment,
                     onChanged: (v) => setState(() => selectedPayment = v),
@@ -219,9 +223,8 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
                     Theme.of(context).colorScheme.tertiaryContainer,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Text(
-                    'No payment will be charged now.\n'
-                        'Booking will be sent for owner approval.',
+                  child: Text(
+                    'no_payment_now'.tr(context),
                   ),
                 ),
 
@@ -234,7 +237,7 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
                     onPressed: loading ? null : _submit,
                     child: loading
                         ? const CircularProgressIndicator()
-                        : const Text('Send Booking Request'),
+                        :   Text('send_booking_request'.tr(context)),
                   ),
                 ),
               ],
@@ -245,238 +248,3 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
     );
   }
 }
-
-
-// class CreateBookingPage extends StatefulWidget {
-//   final int apartment_id;
-//   final int user_id;
-//
-//   CreateBookingPage({
-//     super.key,
-//     required this.apartment_id,
-//     required this.user_id,
-//   });
-//
-//   @override
-//   State<CreateBookingPage> createState() => _CreateBookingPageState();
-// }
-//
-// class _CreateBookingPageState extends State<CreateBookingPage> {
-//   DateTime? start_date;
-//   DateTime? end_date;
-//   PaymentMethod? selectedPayment;
-//   double? lat;
-//   double? lng;
-//
-//   Future<void> submit() async {
-//     if (selectedPayment == null) {
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         const SnackBar(content: Text('Please select payment method')),
-//       );
-//       return;
-//
-//     }
-//     if (start_date == null || end_date == null) return;
-//
-//     try {
-//       final position = await LocationService.getCurrentLocation();
-//
-//       setState(() {
-//         lat = position.latitude;
-//         lng = position.longitude;
-//       });
-//
-//       context.read<BookingBloc>().add(
-//           CreateBookingEvent(
-//             apartment_id: widget.apartment_id,
-//             start_date: start_date!,
-//             end_date: end_date!,
-//             latitude: position.latitude,
-//             longitude: position.longitude,
-//             paymentMethod: selectedPayment!.value,
-//           )
-//
-//       );
-//     } catch (e) {
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(content: Text(e.toString())),
-//       );
-//     }
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: const Text('Create Booking')),
-//       body: BlocConsumer<BookingBloc, BookingState>(
-//         listener: (_, state) {
-//           if (state is BookingActionSuccess) {
-//             context.pop();
-//           }
-//           if (state is BookingError) {
-//             ScaffoldMessenger.of(context).showSnackBar(
-//               SnackBar(content: Text(state.message)),
-//             );
-//           }
-//         },
-//         builder: (_, state) {
-//           final loading = state is BookingLoading;
-//           final price = (start_date != null && end_date != null)
-//               ? (end_date!.difference(start_date!).inDays + 1) * 100
-//               : null;
-//
-//           return Padding(
-//               padding: const EdgeInsets.all(16),
-//               child: Column(
-//                 children: [
-//                   ListTile(
-//                     title: const Text('Start Date'),
-//                     subtitle: Text(start_date?.toString() ?? 'Select'),
-//                     onTap: () async {
-//                       final d = await showDatePicker(
-//                         context: context,
-//                         firstDate: DateTime.now(),
-//                         lastDate: DateTime.now().add(const Duration(days: 365)),
-//                         initialDate: DateTime.now(),
-//                       );
-//                       if (d != null) setState(() => start_date = d);
-//                     },
-//                   ),
-//                   ListTile(
-//                     title: const Text('End Date'),
-//                     subtitle: Text(end_date?.toString() ?? 'Select'),
-//                     onTap: () async {
-//                       final d = await showDatePicker(
-//                         context: context,
-//                         firstDate: DateTime.now(),
-//                         lastDate: DateTime.now().add(const Duration(days: 365)),
-//                         initialDate: DateTime.now(),
-//                       );
-//                       if (d != null) setState(() => end_date = d);
-//                       if (end_date!.isBefore(start_date!)) {
-//                         ScaffoldMessenger.of(context).showSnackBar(
-//                           const SnackBar(content: Text('End date must be after start date')),
-//                         );
-//                         return;
-//                       }
-//
-//                     },
-//                   ),
-//                   if (price != null)
-//                     Card(
-//                       child: Padding(
-//                         padding: const EdgeInsets.all(12),
-//                         child: Column(
-//                           crossAxisAlignment: CrossAxisAlignment.start,
-//                           children: [
-//                             Text('Total price: $price',
-//                                 style: Theme
-//                                     .of(context)
-//                                     .textTheme
-//                                     .titleMedium),
-//                             const SizedBox(height: 6),
-//
-//                           ],
-//                         ),
-//                       ),
-//                     ),
-//                   if (lat != null && lng != null)
-//                     LocationPreviewMap(lat: lat!, lng: lng!),
-//
-//                   Container(
-//                     padding: const EdgeInsets.all(12),
-//                     decoration: BoxDecoration(
-//                       color: Theme.of(context).colorScheme.secondaryContainer,
-//                       borderRadius: BorderRadius.circular(12),
-//                     ),
-//                     child: Row(
-//                       children: const [
-//                         Icon(Icons.location_on_outlined),
-//                         SizedBox(width: 8),
-//                         Expanded(
-//                           child: Text(
-//                             'Your current location will be attached to the booking request.',
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                   const SizedBox(height: 6),
-//                   Container(
-//                     padding: const EdgeInsets.all(12),
-//                     decoration: BoxDecoration(
-//                       color: Theme
-//                           .of(context)
-//                           .colorScheme
-//                           .tertiaryContainer,
-//                       borderRadius: BorderRadius.circular(12),
-//                     ),
-//                     child: Row(
-//                       children: const [
-//                         Icon(Icons.info_outline),
-//                         SizedBox(width: 8),
-//                         Expanded(
-//                           child: Text(
-//                             'No payment will be charged now.\n'
-//                                 'Your booking will be sent for owner approval.',
-//                           ),
-//
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                   Column(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       Text(
-//                         'Payment Method',
-//                         style: Theme.of(context).textTheme.titleMedium,
-//                       ),
-//                       const SizedBox(height: 8),
-//
-//                       ...PaymentMethod.values.map(
-//                             (method) => RadioListTile<PaymentMethod>(
-//                           title: Text(method.label),
-//                           value: method,
-//                           groupValue: selectedPayment,
-//                           onChanged: (value) {
-//                             setState(() => selectedPayment = value);
-//                           },
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                   const SizedBox(height: 6),
-//                   Text(
-//                     'Note: Payment details will be handled by the server after booking approval.',
-//                     style: Theme.of(context)
-//                         .textTheme
-//                         .bodySmall
-//                         ?.copyWith(color: Theme.of(context).colorScheme.outline),
-//                   ),
-//
-//                   SizedBox(
-//                     width: double.infinity,
-//                     child: ElevatedButton(
-//                       onPressed: loading ? null : submit,
-//                       child: loading
-//                           ? const SizedBox(
-//                         height: 20,
-//                         width: 20,
-//                         child: CircularProgressIndicator(strokeWidth: 2),
-//                       )
-//                           : const Text('Confirm'),
-//                     ),
-//                   ),
-//
-//                 ],
-//               )
-//
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
-// //...............
-//

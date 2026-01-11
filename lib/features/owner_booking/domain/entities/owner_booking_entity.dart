@@ -3,8 +3,8 @@ class OwnerBookingEntity {
   final int id;
   final int user_id;
   final int apartment_id;
-  final String startDate;
-  final String endDate;
+  final DateTime startDate;
+  final DateTime endDate;
   final int totalPrice;
   final String status;
 
