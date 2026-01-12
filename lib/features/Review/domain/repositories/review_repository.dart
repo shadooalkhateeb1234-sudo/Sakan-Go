@@ -9,6 +9,8 @@ abstract class ReviewRepository {
   });
   Future<ApartmentRatingEntity> getApartmentAverageRating(int apartmentId);
 
+  void invalidate(int apartmentId);
+
 }
 
 

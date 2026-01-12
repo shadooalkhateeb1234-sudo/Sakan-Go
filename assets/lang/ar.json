@@ -34,7 +34,6 @@
   "new_dates": "التواريخ الجديدة",
   "action_completed": "تم تنفيذ العملية",
   "booking_details": "تفاصيل الحجز",
-  "rate_apartment": "قيّم العقار",
   "edit_booking": "تعديل الحجز",
   "cancel_booking": "إلغاء الحجز",
   "booking_playground": "تجربة الحجز",
@@ -77,5 +76,18 @@
   "credit_card": "بطاقة ائتمان",
   "wallet": "محفظة",
   "select_payment_method": "يرجى اختيار طريقة الدفع",
-
+  "rate_apartment": "تقييم العقار",
+  "submit_review": "إرسال التقييم",
+  "comment_optional": "تعليق (اختياري)",
+  "stars_count": "{0} نجوم",
+  "review_created_success": "تم إرسال التقييم بنجاح",
+  "rating_load_failed": "فشل تحميل التقييم",
+  "rating_unavailable": "التقييم غير متوفر",
+  "no_ratings_yet": "لا يوجد تقييمات بعد",
+  "review_already_exists": "قمت بتقييم هذا الحجز مسبقًا",
+  "booking_not_completed": "لا يمكن التقييم قبل إتمام الحجز",
+  "validation_error": "البيانات المدخلة غير صحيحة",
+  "rating_required": "التقييم مطلوب",
+  "rating_invalid": "التقييم يجب أن يكون بين 1 و 5",
+  
 }

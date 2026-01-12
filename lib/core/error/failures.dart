@@ -24,6 +24,11 @@ class CacheFailure extends Failure {
   const CacheFailure() : super('Cache Failure');
 }
 
+class EmptyFailure extends Failure {
+  EmptyFailure():super('Empty Failure');
+}
+
+
 class EmptyCacheFailure extends Failure {
   EmptyCacheFailure():super('Empty Cache Failure');
 

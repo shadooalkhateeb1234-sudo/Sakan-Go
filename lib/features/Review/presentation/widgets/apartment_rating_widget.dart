@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sakan_go/core/localization/app_localizations.dart';
 import '../manager/rating/rating_bloc.dart';
 import 'animated_stars_widget.dart';
 
@@ -38,16 +39,18 @@ import 'animated_stars_widget.dart';
     }
   }
 
+
+
   @override
      Widget build(BuildContext context) {
       return BlocBuilder<RatingBloc, RatingState>(
        builder: (_, state) {
       if (state is RatingLoading) return   _Skeleton();
-      if (state is RatingEmpty) return   Text('No ratings yet');
+      if (state is RatingEmpty) return   Text( 'no_ratings_yet'.tr(context));
       if (state is RatingLoaded) {
         return AnimatedStars(average: state.average);
           }
-      if (state is RatingError) return const Text('Rating unavailable');
+      if (state is RatingError) return   Text('rating_unavailable'.tr(context));
           return   SizedBox.shrink();
              },
           );

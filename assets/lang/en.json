@@ -33,7 +33,6 @@
   "new_dates": "New dates",
   "action_completed": "Action completed",
   "booking_details": "Booking Details",
-  "rate_apartment": "Rate apartment",
   "edit_booking": "Edit booking",
   "cancel_booking": "Cancel booking",
   "booking_playground": "Booking Playground",
@@ -75,5 +74,20 @@
   "payment_required": "Please select payment method",
   "credit_card": "Credit Card",
   "wallet": "Wallet",
-  "select_payment_method": "Please select payment method"
+  "select_payment_method": "Please select payment method",
+  "rate_apartment": "Rate apartment",
+  "submit_review": "Submit review",
+  "comment_optional": "Comment (optional)",
+  "stars_count": "{0} stars",
+  "review_created_success": "Review created successfully",
+  "rating_load_failed": "Failed to load rating",
+  "rating_unavailable": "Rating unavailable",
+  "no_ratings_yet": "No ratings yet",
+  "review_already_exists": "You already reviewed this booking",
+  "booking_not_completed": "Booking must be completed before reviewing",
+  "validation_error": "Invalid input data",
+  "rating_required": "Rating is required",
+  "rating_invalid": "Rating must be between 1 and 5"
+
+
 }

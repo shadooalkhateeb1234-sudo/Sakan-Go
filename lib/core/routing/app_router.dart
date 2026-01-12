@@ -36,7 +36,7 @@ import '../../features/admin_approval/presentation/bloc/admin_approval_bloc.dart
 
 class AppRouter {
   static final GoRouter appRouter = GoRouter(
-    initialLocation:  '/booking-playground',
+    initialLocation: '/booking-playground',
     routes: [
       GoRoute(
         path: '/booking-playground',
@@ -204,22 +204,21 @@ class AppRouter {
           int.parse(state.pathParameters['bookingId']!);
           final apartmentId =
           int.parse(state.pathParameters['apartmentId']!);
-
           return MultiBlocProvider(
             providers: [
-              BlocProvider.value(
-                value: context.read<ReviewBloc>(),
+              BlocProvider(
+                create: (_) => di<ReviewBloc>(),
               ),
-              BlocProvider.value(
-                value: context.read<RatingBloc>(),
+              BlocProvider(
+                create: (_) => di<RatingBloc>(),
               ),
             ],
             child: CreateReviewPage(
               booking_id: bookingId,
               apartmentId: apartmentId,
             ),
-
           );
+
         },
       ),
     ],

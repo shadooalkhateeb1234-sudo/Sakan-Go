@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../features/Review/data/data_sources/fake_review_remote_data_source.dart';
 import '../../features/Review/data/data_sources/review_remote_data_source.dart';
 import '../../features/Review/data/repositories/review_repositpry_impl.dart';
 import '../../features/Review/domain/repositories/review_repository.dart';
@@ -36,6 +37,7 @@ import '../../features/language/data/repositories/language_repository_impl.dart'
 import '../../features/language/domain/repositories/language_repository.dart';
 import '../../features/language/domain/use_cases/get_language_use_case.dart';
 import '../../features/language/domain/use_cases/save_language_use_case.dart';
+import '../../features/owner_booking/data/data_sources/fake_owner_booking_remote_data_source.dart';
 import '../../features/owner_booking/data/data_sources/owner_booking_remote_data_source.dart';
 import '../../features/owner_booking/data/repositories/owner_booking_repository_impl.dart';
 import '../../features/owner_booking/domain/repositories/owner_booking_repository.dart';
@@ -227,14 +229,26 @@ Future<void> init() async
   //============================================================
   //======================= BOOKINGS ===========================
   //============================================================
+  // BOOKINGS
+//   di.registerLazySingleton<BookingRemoteDataSource>(
+//         () => FakeBookingRemoteDataSource(),
+//   );
+//
+// // REVIEWS
+//   di.registerLazySingleton<ReviewRemoteDataSource>(
+//         () => FakeReviewRemoteDataSource(),
+//   );
+//
+// // OWNER BOOKINGS
+//   di.registerLazySingleton<OwnerBookingRemoteDataSource>(
+//         () => FakeOwnerBookingRemoteDataSource(),
+//   );
+
   // Data source
     di.registerLazySingleton<BookingRemoteDataSource>(
           () => BookingRemoteDataSourceImpl(client: di() , userSessionLocalDataSource: di()),
     );
-  // fake data source
-  // di.registerLazySingleton<BookingRemoteDataSource>(
-  //       () => FakeBookingRemoteDataSource(),
-  // );
+
   // Repository
   di.registerLazySingleton<BookingRepository>(
         () =>
@@ -287,15 +301,15 @@ Future<void> init() async
   di.registerFactory(
         () =>
         ReviewBloc(
-          createReviewUseCase: di(),
+          createReview: di(),
         ),
   );
+
   di.registerFactory(
-        () =>
-        RatingBloc(
-          useCase: di(),
-          repository: di(),
-        ),
+        () => RatingBloc(
+      getRating: di(),
+      repository: di<ReviewRepository>(),
+    ),
   );
 
 

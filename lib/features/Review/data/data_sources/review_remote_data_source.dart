@@ -48,6 +48,9 @@ class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
 
     switch (response.statusCode) {
       case 200:
+        if (body['data']['average_rating'] == null) {
+          throw EmptyFailure();
+        }
         return (body['data']['average_rating'] as num).toDouble();
       case 404:
         throw NotFoundFailure();
@@ -55,7 +58,6 @@ class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
         throw ServerFailure();
     }
   }
-
 
   @override
   Future<void> createReview({
@@ -101,4 +103,5 @@ class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
         throw UnexpectedFailure();
     }
   }
+
 }
