@@ -43,14 +43,22 @@ class UserSessionRepositoryImpl implements UserSessionRepository
   @override
   Future<Either<Failure, UserSessionEntity>> getUserSession() async
   {
+    try {
       final userSession = await userSessionLocalDataSource.getUserSession();
       return Right(userSession);
+    } on CacheException {
+      return Left(CacheFailure());
+    }
   }
 
   @override
   Future<Either<Failure, Unit>> setOnboardingCompleted() async
   {
+    try {
       await userSessionLocalDataSource.setOnboardingCompleted();
       return Right(unit);
+    } on CacheException {
+      return Left(CacheFailure());
+    }
   }
 }

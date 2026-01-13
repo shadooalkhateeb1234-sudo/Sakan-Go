@@ -40,7 +40,7 @@ class BookingDetailsPage extends StatelessWidget {
           if (BookingStateMachine.can(booking.status, BookingAction.cancel))
             OutlinedButton(
               onPressed: () {
-                context.push('/booking/cancel/${booking.id}');
+                context.push('/bookings/cancel/${booking.id}');
               },
               child: Text('cancel_booking'.tr(context)),
             ),
@@ -69,7 +69,7 @@ class BookingDetailsPage extends StatelessWidget {
                   'This booking can no longer be modified.',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.error,
-                  ),
+                   ),
                 ),
               ),
           ],

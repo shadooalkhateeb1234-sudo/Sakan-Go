@@ -89,5 +89,15 @@
   "validation_error": "البيانات المدخلة غير صحيحة",
   "rating_required": "التقييم مطلوب",
   "rating_invalid": "التقييم يجب أن يكون بين 1 و 5",
+  "booking_request_sent": "تم إرسال طلب الحجز وبانتظار الموافقة",
+  "booking_update_requested": "تم إرسال طلب التعديل وبانتظار موافقة المالك",
+  "error_no_internet": "لا يوجد اتصال بالإنترنت",
+  "error_session_expired": "انتهت الجلسة، الرجاء تسجيل الدخول مجددًا",
+  "error_not_allowed": "غير مصرح لك بتنفيذ هذا الإجراء",
+  "error_not_found": "العنصر غير موجود",
+  "error_conflict": "يوجد تعارض، الرجاء التحديث",
+  "error_invalid_data": "البيانات المدخلة غير صحيحة",
+  "error_server": "خطأ في الخادم، حاول لاحقًا",
+  "unexpected_error": "حدث خطأ غير متوقع"
   
 }

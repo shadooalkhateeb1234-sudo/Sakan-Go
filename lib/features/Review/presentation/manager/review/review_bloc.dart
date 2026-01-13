@@ -26,11 +26,11 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
         stars: event.stars,
         comment: event.comment,
       );
-      emit(  ReviewSuccess('review_created_success'));
+      emit( ReviewSuccess('review_created_success'));
     } on Failure catch (f) {
       emit(ReviewError(f.message));
     } catch (_) {
-      emit(  ReviewError('unexpected_error'));
+      emit(ReviewError('unexpected_error'));
     }
   }
 }

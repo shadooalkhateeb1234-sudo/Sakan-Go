@@ -1,5 +1,5 @@
 class RouteName {
-  static const String base_url = "http://127.0.0.1:8000/api/booking";
+ // static const String base_url = "http://127.0.0.1:8000/api/booking";
   //intro
   static const String splash = '/';
   static const String onboarding = '/onboarding';
@@ -17,6 +17,7 @@ class RouteName {
   static const Bookingcancel = '/bookings/cancel/:id';
   static const Ownerbookings  = '/owner/bookings';
   //review(rating)
-  static const createReview='/createReview';
+  static const createReview='/createReview/:bookingId/:apartmentId';
+
 
 }

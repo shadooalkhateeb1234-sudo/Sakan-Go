@@ -36,7 +36,7 @@ import '../../features/admin_approval/presentation/bloc/admin_approval_bloc.dart
 
 class AppRouter {
   static final GoRouter appRouter = GoRouter(
-    initialLocation: '/booking-playground',
+    initialLocation:'/booking-playground',
     routes: [
       GoRoute(
         path: '/booking-playground',

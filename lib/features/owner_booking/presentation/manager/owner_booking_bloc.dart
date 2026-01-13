@@ -125,21 +125,22 @@ class OwnerBookingBloc extends Bloc<OwnerBookingEvent, OwnerBookingState> {
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
       case NetworkFailure:
-        return 'No internet connection';
+        return 'error_no_internet';
       case UnAuthorizedFailure:
-        return 'Session expired, please login again';
+        return 'error_session_expired';
       case ForbiddenFailure:
-        return 'You are not allowed to perform this action';
+        return 'error_not_allowed';
       case NotFoundFailure:
-        return 'Resource not found';
+        return 'error_not_found';
       case ConflictFailure:
-        return 'Conflict occurred, please refresh';
+        return 'error_conflict';
       case UnprocessableEntityFailure:
-        return 'Invalid data provided';
+        return 'error_invalid_data';
       case ServerFailure:
-        return 'Server error, try again later';
+        return 'error_server';
       default:
-        return 'Unexpected error occurred';
+        return 'unexpected_error';
     }
   }
+
 }

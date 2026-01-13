@@ -8,9 +8,14 @@ class AppLocalizations
 
   AppLocalizations({required this.locale});
 
-  static AppLocalizations? of(BuildContext context)
-  {
-    return Localizations.of<AppLocalizations>(context, AppLocalizations);
+  // static AppLocalizations? of(BuildContext context)
+  // {
+  //   return Localizations.of<AppLocalizations>(context, AppLocalizations);
+  // }
+  static AppLocalizations of(BuildContext context) {
+    final loc = Localizations.of<AppLocalizations>(context, AppLocalizations);
+    assert(loc != null, 'AppLocalizations not found');
+    return loc!;
   }
 
   static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
@@ -61,3 +66,4 @@ extension TranslateX on String
     return AppLocalizations.of(context)!.translate(this);
   }
 }
+

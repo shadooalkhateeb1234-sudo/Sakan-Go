@@ -20,7 +20,10 @@ import 'features/theme/domain/entities/theme_entity.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FirebaseInitialize.initialize();
+  // await Firebase.initializeApp(
+  //   options: DefaultFirebaseOptions.currentPlatform,
+  // );
+
   await NotificationsInitialize.initialize();
   //هي لازم بعد ال login
   //await FirebaseNotificationService.instance.init(context);
@@ -54,15 +57,19 @@ class MyApp extends StatelessWidget {
             {
               return BlocBuilder<ThemeBloc, ThemeState>
                 (
-                  builder: (context, themeState)
-                  {
-                    final isDark = themeState.themeEntity?.themeType == ThemeType.dark;
+                  builder: (context, themeState) {
+                    final isDark = themeState.themeEntity?.themeType ==
+                        ThemeType.dark;
+
                     return MaterialApp.router
                       (
                         debugShowCheckedModeBanner: false,
                         routerConfig: AppRouter.appRouter,
-                        locale:
-                        Locale(languageState.languageEntity?.languageType.name ?? 'en'),
+                        locale: languageState.languageEntity == null
+                            ? const Locale('en')
+                            : Locale(
+                            languageState.languageEntity!.languageType.name),
+
                         supportedLocales: const
                         [
                           Locale('en'),
@@ -80,6 +87,7 @@ class MyApp extends StatelessWidget {
                         darkTheme: AppTheme.dark,
                         themeMode: isDark ? ThemeMode.dark : ThemeMode.light
                     );
+
                   }
               );
             }

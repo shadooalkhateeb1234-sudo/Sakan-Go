@@ -69,10 +69,8 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         BookingError(failure.message),
       ),
           (_) {
-        emit(const BookingActionSuccess(
-          'the booking request has been submitted\n and is awaiting approval',
-        ));
-        add(GetUserBookingsEvent());
+            emit(const BookingActionSuccess('booking_request_sent'));
+            add(GetUserBookingsEvent());
       },
     );
   }
@@ -90,7 +88,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         BookingError(failure.message),
       ),
           (_) {
-        emit(const BookingActionSuccess('the booking has been cancelled'));
+        emit(BookingActionSuccess('booking_cancelled'));
         add(GetUserBookingsEvent());
       },
     );
@@ -114,7 +112,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         BookingError(failure.message),
       ),
           (_) {
-        emit(const BookingActionSuccess('Update request sent, waiting for owner approval',));
+        emit(BookingActionSuccess('booking_update_requested'));
         add(GetUserBookingsEvent());
       } ,
 
@@ -134,8 +132,8 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     result.fold(
           (failure) => emit(BookingError(failure.message)),
           (_) {
-        emit(const BookingActionSuccess(
-          'The owner rejected this booking',
+        emit(BookingActionSuccess(
+          'booking_rejected',
         ));
         add(GetUserBookingsEvent());
       },

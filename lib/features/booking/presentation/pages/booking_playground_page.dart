@@ -44,7 +44,7 @@ class BookingPlaygroundPage extends StatelessWidget {
             title: 'Create Review (booking #1)',
             onTap: () {
               context.push(
-                '/create-review/1/99',
+                 '/createReview/12/99' ,
               );
             },
           ),
@@ -53,7 +53,7 @@ class BookingPlaygroundPage extends StatelessWidget {
             icon: Icons.cancel,
             title: 'Cancel Booking #1',
             onTap: () {
-              context.push('/booking-cancel/1');
+              context.push(RouteName.Bookingcancel);
             },
           ),
 
@@ -96,7 +96,7 @@ class _ActionButton extends StatelessWidget {
     );
   }
 }
-
+//
 // class BookingPlaygroundPage extends StatelessWidget {
 //   const BookingPlaygroundPage({super.key});
 //

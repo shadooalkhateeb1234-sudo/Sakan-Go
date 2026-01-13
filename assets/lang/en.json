@@ -87,7 +87,17 @@
   "booking_not_completed": "Booking must be completed before reviewing",
   "validation_error": "Invalid input data",
   "rating_required": "Rating is required",
-  "rating_invalid": "Rating must be between 1 and 5"
+  "rating_invalid": "Rating must be between 1 and 5",
+  "booking_request_sent": "Booking request sent and awaiting approval",
+  "booking_update_requested": "Update request sent, waiting for owner approval",
+  "error_no_internet": "No internet connection",
+  "error_session_expired": "Session expired, please login again",
+  "error_not_allowed": "You are not allowed to perform this action",
+  "error_not_found": "Resource not found",
+  "error_conflict": "Conflict occurred, please refresh",
+  "error_invalid_data": "Invalid data provided",
+  "error_server": "Server error, try again later",
+  "unexpected_error": "Unexpected error occurred"
 
 
 }

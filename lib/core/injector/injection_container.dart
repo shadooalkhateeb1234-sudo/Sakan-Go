@@ -307,7 +307,7 @@ Future<void> init() async
 
   di.registerFactory(
         () => RatingBloc(
-      getRating: di(),
+      getRating: di<GetApartmentAverageRatingUseCase>(),
       repository: di<ReviewRepository>(),
     ),
   );
