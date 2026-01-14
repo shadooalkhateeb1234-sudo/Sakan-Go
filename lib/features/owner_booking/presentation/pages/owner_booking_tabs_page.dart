@@ -5,6 +5,7 @@ import '../manager/owner_booking_bloc.dart';
 import 'owner_approval_page.dart';
 import 'owner_update_requests_page.dart';
 
+
 class OwnerBookingsTabsPage extends StatefulWidget {
   final int initialTab;
 
@@ -25,7 +26,6 @@ class _OwnerBookingsTabsPageState extends State<OwnerBookingsTabsPage>
   @override
   void initState() {
     super.initState();
-
     _controller = TabController(
       length: 2,
       vsync: this,

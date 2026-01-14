@@ -4,13 +4,16 @@ import 'package:sakan_go/core/localization/app_localizations.dart';
 import '../manager/owner_booking_bloc.dart';
 import 'package:intl/intl.dart';
 
+
+
 class OwnerApprovalPage extends StatelessWidget {
   const OwnerApprovalPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final  f = DateFormat('dd MMM yyyy');
+    final f = DateFormat('dd MMM yyyy');
+
     return BlocBuilder<OwnerBookingBloc, OwnerBookingState>(
       builder: (context, state) {
         if (state is OwnerBookingLoading) {
@@ -27,7 +30,7 @@ class OwnerApprovalPage extends StatelessWidget {
           return ListView.builder(
             padding: const EdgeInsets.all(12),
             itemCount: state.bookings.length,
-            itemBuilder: (_, i) {
+            itemBuilder: (context, i) {
               final b = state.bookings[i];
 
               return Card(
@@ -36,10 +39,8 @@ class OwnerApprovalPage extends StatelessWidget {
                     '${'apartment'.tr(context)} ${b.apartment_id}',
                   ),
                   subtitle: Text(
-
-                     '${f.format(b.startDate)} → ${f.format(b.endDate)}'
-
-              ),
+                    '${f.format(b.startDate)} → ${f.format(b.endDate)}',
+                  ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
