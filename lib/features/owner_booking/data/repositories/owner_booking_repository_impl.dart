@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/network/network_info.dart';
 import '../../../booking/domain/entities/booking_update_request_entity.dart';
+import '../../../user_session/data/local/data_sources/user_session_local_data_source.dart';
 import '../../domain/entities/owner_booking_entity.dart';
 import '../../domain/repositories/owner_booking_repository.dart';
 import '../data_sources/owner_booking_remote_data_source.dart';
@@ -12,10 +12,12 @@ import '../data_sources/owner_booking_remote_data_source.dart';
 class OwnerBookingRepositoryImpl implements OwnerBookingRepository {
   final OwnerBookingRemoteDataSource remote;
   final NetworkInfo networkInfo;
+  final UserSessionLocalDataSource userSessionLocalDataSource;
 
   OwnerBookingRepositoryImpl({
     required this.remote,
     required this.networkInfo,
+    required this.userSessionLocalDataSource,
   });
 
   @override

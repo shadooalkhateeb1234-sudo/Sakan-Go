@@ -1,5 +1,4 @@
 import 'package:sakan_go/features/booking/data/models/payment_model.dart';
-
 import '../../domain/entities/booking_entity.dart';
 
 
@@ -43,6 +42,7 @@ class BookingModel extends BookingEntity {
     DateTime? end_date,
     String? status,
     int? total_price,
+    PaymentModel? payment,
   }) {
     return BookingModel(
       id: id ?? this.id,
@@ -52,7 +52,7 @@ class BookingModel extends BookingEntity {
       end_date: end_date ?? this.end_date,
       status: status ?? this.status,
       total_price: total_price ?? this.total_price,
-      payment: payment,
+      payment: payment ?? this.payment,
     );
   }
 }

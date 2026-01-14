@@ -111,7 +111,10 @@ class _UpdateRequestCard extends StatelessWidget {
                   label: Text('reject'.tr(context)),
                   onPressed: () {
                     context.read<OwnerBookingBloc>().add(
-                      RejectUpdateRequestEvent(request.id),
+                      RejectUpdateRequestEvent(
+                        requestId: request.id,
+                        bookingId: request.booking_id,
+                      ),
                     );
                   },
                 ),
@@ -123,7 +126,10 @@ class _UpdateRequestCard extends StatelessWidget {
                       ? null
                       : () {
                     context.read<OwnerBookingBloc>().add(
-                      ApproveUpdateRequestEvent(request.id),
+                      ApproveUpdateRequestEvent(
+                        requestId: request.id,
+                        bookingId: request.booking_id,
+                      ),
                     );
                   },
                 ),

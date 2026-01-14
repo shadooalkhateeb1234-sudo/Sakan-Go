@@ -1,3 +1,4 @@
+import '../../../booking/domain/entities/payment_entity.dart';
 
 class OwnerBookingEntity {
   final int id;
@@ -7,6 +8,7 @@ class OwnerBookingEntity {
   final DateTime endDate;
   final int totalPrice;
   final String status;
+  final PaymentEntity payment;
 
   OwnerBookingEntity({
     required this.id,
@@ -16,5 +18,6 @@ class OwnerBookingEntity {
     required this.endDate,
     required this.totalPrice,
     required this.status,
+    required this.payment,
   });
 }

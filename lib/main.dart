@@ -22,8 +22,8 @@ import 'features/theme/domain/entities/theme_entity.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
-  // await FirebaseNotificationService.instance.init();
+ // await Firebase.initializeApp();
+ // await FirebaseNotificationService.instance.init();
 
   //هي لازم بعد ال login
   //await FirebaseNotificationService.instance.init(context);
@@ -42,7 +42,6 @@ class MyApp extends StatelessWidget {
       (
         providers:
         [
-          //BlocProvider(create: (_) => NotificationBloc()),
           BlocProvider(create: (_) => di<OwnerBookingBloc>()),
           BlocProvider(create: (_) => di<BookingBloc>()),
           BlocProvider
@@ -52,7 +51,9 @@ class MyApp extends StatelessWidget {
           BlocProvider
             (
               create: (_) => di<ThemeBloc>()..add(GetThemeEvent())
-          )
+          ),
+        //  BlocProvider(create: (_) => NotificationBloc()),
+
         ],
         child: BlocBuilder<LanguageBloc, LanguageState>
           (

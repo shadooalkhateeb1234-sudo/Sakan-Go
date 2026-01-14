@@ -1,6 +1,5 @@
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../features/Review/data/data_sources/fake_review_remote_data_source.dart';
 import '../../features/Review/data/data_sources/review_remote_data_source.dart';
 import '../../features/Review/data/repositories/review_repositpry_impl.dart';
 import '../../features/Review/domain/repositories/review_repository.dart';
@@ -37,7 +36,6 @@ import '../../features/language/data/repositories/language_repository_impl.dart'
 import '../../features/language/domain/repositories/language_repository.dart';
 import '../../features/language/domain/use_cases/get_language_use_case.dart';
 import '../../features/language/domain/use_cases/save_language_use_case.dart';
-import '../../features/owner_booking/data/data_sources/fake_owner_booking_remote_data_source.dart';
 import '../../features/owner_booking/data/data_sources/owner_booking_remote_data_source.dart';
 import '../../features/owner_booking/data/repositories/owner_booking_repository_impl.dart';
 import '../../features/owner_booking/domain/repositories/owner_booking_repository.dart';
@@ -68,13 +66,11 @@ import '../../features/user_session/domain/use_cases/cache_user_session_use_case
 import '../../features/user_session/domain/use_cases/clear_user_session_use_case.dart';
 import '../../features/user_session/domain/use_cases/get_user_session_use_case.dart';
 import '../../features/user_session/domain/use_cases/set_onboarding_completed_use_case.dart';
-import '../../features/booking/data/data_sources/fake_booking_remote_data_source.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import '../../features/booking/data/data_sources/booking_remote_data_source.dart';
 import '../../features/booking/data/repositories/booking_repository_impl.dart';
 import '../../features/booking/domain/use_cases/create_booking_usecase.dart';
 import '../../features/booking/domain/use_cases/reject_booking_usecase.dart';
-import '../../features/booking/domain/use_cases/update_booking_usecase.dart';
 import '../../features/booking/domain/use_cases/cancel_booking_usecase.dart';
 import '../../features/booking/domain/repositories/booking_repository.dart';
 import '../../features/booking/domain/use_cases/get_bookings_usecase.dart';
@@ -230,19 +226,6 @@ Future<void> init() async
   //======================= BOOKINGS ===========================
   //============================================================
   // BOOKINGS
-//   di.registerLazySingleton<BookingRemoteDataSource>(
-//         () => FakeBookingRemoteDataSource(),
-//   );
-//
-// // REVIEWS
-//   di.registerLazySingleton<ReviewRemoteDataSource>(
-//         () => FakeReviewRemoteDataSource(),
-//   );
-//
-// // OWNER BOOKINGS
-//   di.registerLazySingleton<OwnerBookingRemoteDataSource>(
-//         () => FakeOwnerBookingRemoteDataSource(),
-//   );
 
   // Data source
     di.registerLazySingleton<BookingRemoteDataSource>(
@@ -262,7 +245,6 @@ Future<void> init() async
   di.registerLazySingleton(() => CreateBookingUseCase(di()));
   di.registerLazySingleton(() => CancelBookingUseCase(di()));
   di.registerLazySingleton(() => GetUserBookingsUsecase(di()));
- // di.registerLazySingleton(() => UpdateBookingUseCase(di()));
   di.registerLazySingleton(() => RejectBookingUseCase(di()));
   di.registerLazySingleton(() => UpdateBookingUseCase(di()));
 
@@ -275,7 +257,7 @@ Future<void> init() async
           getUserBookings: di(),
           updateBooking: di(),
           rejectBooking: di(),
-          createReview: di(),
+
 
         ),
   );
@@ -327,7 +309,7 @@ Future<void> init() async
             OwnerBookingRepositoryImpl(
           remote: di(),
           networkInfo: di(),
-         // userSessionLocalDataSource: di(),
+          userSessionLocalDataSource: di(),
         ),
   );
 
@@ -338,6 +320,7 @@ Future<void> init() async
     di.registerLazySingleton(() => GetOwnerUpdateRequests(di()));
     di.registerLazySingleton(() => ApproveUpdateRequest(di()));
     di.registerLazySingleton(() => RejectUpdateRequest(di()));
+
 
   // Bloc
   di.registerFactory(() => OwnerBookingBloc(

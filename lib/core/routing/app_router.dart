@@ -37,7 +37,6 @@ import '../../features/admin_approval/presentation/bloc/admin_approval_bloc.dart
 import '../notifications/presentation/pages/notification_inbox_page.dart';
 
 
-
 final GlobalKey<NavigatorState> rootNavigatorKey =
 GlobalKey<NavigatorState>();
 
@@ -200,14 +199,25 @@ class AppRouter {
           return CancelBookingPage(bookingId: id);
         },
       ),
+      // GoRoute(
+      //   path: RouteName.Ownerbookings,
+      //   builder: (_, __) => BlocProvider(
+      //     create: (_) => di<OwnerBookingBloc>(),
+      //     child: const OwnerBookingsTabsPage(),
+      //   ),
+      // ),
       GoRoute(
         path: RouteName.Ownerbookings,
-        builder: (_, __) => BlocProvider(
-          create: (_) => di<OwnerBookingBloc>(),
-          child: const OwnerBookingsTabsPage(),
-        ),
+        builder: (context, state) {
+          final tab = state.uri.queryParameters['tab'];
+          return BlocProvider(
+            create: (_) => di<OwnerBookingBloc>(),
+            child: OwnerBookingsTabsPage(
+              initialTab: tab == 'updates' ? 1 : 0,
+            ),
+          );
+        },
       ),
-
       GoRoute(
         path: RouteName.createReview,
         builder: (context, state) {

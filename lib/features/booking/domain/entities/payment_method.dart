@@ -3,6 +3,7 @@ enum PaymentMethod {
   wallet,
 }
 
+
 extension PaymentMethodX on PaymentMethod {
   String get value {
     switch (this) {

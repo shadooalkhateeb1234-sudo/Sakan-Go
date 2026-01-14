@@ -1,3 +1,4 @@
+import '../../../booking/data/models/payment_model.dart';
 import '../../domain/entities/owner_booking_entity.dart';
 
 class OwnerBookingModel extends OwnerBookingEntity {
@@ -9,6 +10,7 @@ class OwnerBookingModel extends OwnerBookingEntity {
     required super.endDate,
     required super.totalPrice,
     required super.status,
+    required super.payment,
   });
 
   factory OwnerBookingModel.fromJson(Map<String, dynamic> json) {
@@ -20,7 +22,9 @@ class OwnerBookingModel extends OwnerBookingEntity {
       endDate: DateTime.parse(json['end_date']),
       totalPrice: json['total_price'],
       status: json['status'],
+      payment: PaymentModel.fromJson(json['payment']),
     );
   }
+
 }
 

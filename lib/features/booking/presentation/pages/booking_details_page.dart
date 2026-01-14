@@ -66,7 +66,7 @@ class BookingDetailsPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 16),
                 child: Text(
-                  'This booking can no longer be modified.',
+                  'This_booking_can_no_longer_be_modified.',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.error,
                    ),

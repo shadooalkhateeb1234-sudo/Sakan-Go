@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/routing/routes_name.dart';
 import '../../domain/entities/booking_entity.dart';
 
+
 class BookingCard extends StatelessWidget {
   final BookingEntity booking;
   final VoidCallback? onTap;
@@ -14,6 +15,7 @@ class BookingCard extends StatelessWidget {
     this.onTap,
   });
 
+  // ================= STATUS COLOR =================
   Color _statusColor(ColorScheme scheme) {
     switch (booking.status) {
       case 'confirmed':
@@ -29,6 +31,7 @@ class BookingCard extends StatelessWidget {
     }
   }
 
+  // ================= STATUS TEXT =================
   String _statusHint() {
     switch (booking.status) {
       case 'pending':
@@ -46,12 +49,13 @@ class BookingCard extends StatelessWidget {
     }
   }
 
+  // ================= STATUS ICON =================
   IconData _statusIcon() {
     switch (booking.status) {
       case 'confirmed':
         return Icons.check_circle;
       case 'completed':
-        return Icons.check_circle_outline;
+        return Icons.verified;
       case 'cancelled':
       case 'rejected':
         return Icons.cancel;
@@ -66,7 +70,13 @@ class BookingCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final color = _statusColor(scheme);
     final dateFormat = DateFormat('dd MMM yyyy');
-    final canEdit = booking.status == 'pending' || booking.status == 'confirmed';
+
+    /// edit only if pending or confirmed
+    final canEdit =
+        booking.status == 'pending' || booking.status == 'confirmed';
+
+    /// rate only if completed
+    final canRate = booking.status == 'completed';
 
     return InkWell(
       onTap: canEdit ? onTap : null,
@@ -81,11 +91,15 @@ class BookingCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// STATUS
+              // ================= STATUS =================
               Row(
                 children: [
                   Chip(
-                    avatar: Icon(_statusIcon(), size: 16, color: color),
+                    avatar: Icon(
+                      _statusIcon(),
+                      size: 16,
+                      color: color,
+                    ),
                     label: Text(
                       booking.status.toUpperCase(),
                       style: TextStyle(
@@ -98,15 +112,20 @@ class BookingCard extends StatelessWidget {
                   ),
                   const Spacer(),
                   if (canEdit)
-                    Icon(Icons.edit, color: scheme.primary),
+                    Icon(
+                      Icons.edit,
+                      size: 18,
+                      color: scheme.primary,
+                    ),
                 ],
               ),
 
               const SizedBox(height: 10),
 
-              /// DATE RANGE
+              // ================= DATE RANGE =================
               Text(
-                '${dateFormat.format(booking.start_date)} → ${dateFormat.format(booking.end_date)}',
+                '${dateFormat.format(booking.start_date)} → '
+                    '${dateFormat.format(booking.end_date)}',
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium
@@ -115,7 +134,7 @@ class BookingCard extends StatelessWidget {
 
               const SizedBox(height: 6),
 
-              /// APARTMENT
+              // ================= APARTMENT =================
               Text(
                 'Apartment #${booking.apartment_id}',
                 style: Theme.of(context).textTheme.titleMedium,
@@ -123,6 +142,7 @@ class BookingCard extends StatelessWidget {
 
               const SizedBox(height: 6),
 
+              // ================= PRICE =================
               Text(
                 'Total price: ${booking.total_price}',
                 style: Theme.of(context)
@@ -133,7 +153,7 @@ class BookingCard extends StatelessWidget {
 
               const SizedBox(height: 6),
 
-              /// STATUS HINT
+              // ================= STATUS HINT =================
               Text(
                 _statusHint(),
                 style: Theme.of(context)
@@ -141,7 +161,10 @@ class BookingCard extends StatelessWidget {
                     .bodySmall
                     ?.copyWith(color: scheme.outline),
               ),
-              if (booking.status == 'completed')
+
+              // ================= RATE =================
+              if (canRate) ...[
+                const SizedBox(height: 12),
                 ElevatedButton.icon(
                   icon: const Icon(Icons.star, color: Colors.amber),
                   label: const Text('Rate apartment'),
@@ -152,10 +175,12 @@ class BookingCard extends StatelessWidget {
                   ),
                   onPressed: () {
                     context.push(
-                      '${RouteName.createReview}/${booking.id}',
+                      RouteName.createReview,
+                      extra: booking.id,
                     );
                   },
                 ),
+              ],
             ],
           ),
         ),

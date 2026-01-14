@@ -102,5 +102,6 @@
   "No_bookings_yet": "لا حجوزات حجوزات لحد الان",
   "Are_you_sure_you_want_to_cancel_this_booking?": "هل انت متأكد انك تود الغاء هذا الحجز؟",
   "This_booking_cannot_be_cancelled": "هذا الحجز لا يمكن الغاؤه !",
-  "No_bookings": "لا حجوزات"
+  "No_bookings": "لا حجوزات",
+  "This_booking_can_no_longer_be_modified.":"لا يمكن تعدبل هذا الحجز بعد الان "
 }

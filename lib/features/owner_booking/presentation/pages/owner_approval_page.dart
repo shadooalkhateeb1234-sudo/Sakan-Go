@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sakan_go/core/localization/app_localizations.dart';
 import '../manager/owner_booking_bloc.dart';
+import 'package:intl/intl.dart';
 
 class OwnerApprovalPage extends StatelessWidget {
   const OwnerApprovalPage({super.key});
@@ -9,7 +10,7 @@ class OwnerApprovalPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-
+    final  f = DateFormat('dd MMM yyyy');
     return BlocBuilder<OwnerBookingBloc, OwnerBookingState>(
       builder: (context, state) {
         if (state is OwnerBookingLoading) {
@@ -35,8 +36,10 @@ class OwnerApprovalPage extends StatelessWidget {
                     '${'apartment'.tr(context)} ${b.apartment_id}',
                   ),
                   subtitle: Text(
-                    '${b.startDate.toLocal()} → ${b.endDate.toLocal()}',
-                  ),
+
+                     '${f.format(b.startDate)} → ${f.format(b.endDate)}'
+
+              ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [

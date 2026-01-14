@@ -20,8 +20,7 @@ abstract class OwnerBookingRemoteDataSource {
   Future<void> rejectUpdateRequest(int requestId);
 }
 
-class OwnerBookingRemoteDataSourceImpl
-    implements OwnerBookingRemoteDataSource {
+class OwnerBookingRemoteDataSourceImpl implements OwnerBookingRemoteDataSource {
   final http.Client client;
   final UserSessionLocalDataSource userSessionLocalDataSource;
 
@@ -30,18 +29,17 @@ class OwnerBookingRemoteDataSourceImpl
     required this.userSessionLocalDataSource,
   });
   Future<Map<String, String>> _headers() async {
-    String token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3VzZXIvdmVyaWZ5LXBob25lLW90cCIsImlhdCI6MTc2ODIzODAxMiwiZXhwIjoxNzY4ODQyODEyLCJuYmYiOjE3NjgyMzgwMTIsImp0aSI6Ijc2WHhEN1RHTXFlZDE2dm4iLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.cawtsQLlg4IOpJGKVOGXhj5mMQsSCyr8isat0YLXdDk';
-    // final session = await userSessionLocalDataSource.getUserSession();
-    // if (session.token == null || session.token!.isEmpty) {
-    //   throw UnAuthorizedFailure();
-    // }
-    if (token == null || token!.isEmpty) {
+   // String token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3VzZXIvdmVyaWZ5LXBob25lLW90cCIsImlhdCI6MTc2ODIzODAxMiwiZXhwIjoxNzY4ODQyODEyLCJuYmYiOjE3NjgyMzgwMTIsImp0aSI6Ijc2WHhEN1RHTXFlZDE2dm4iLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.cawtsQLlg4IOpJGKVOGXhj5mMQsSCyr8isat0YLXdDk';
+
+    final session = await userSessionLocalDataSource.getUserSession();
+    if (session.token == null || session.token!.isEmpty) {
       throw UnAuthorizedFailure();
     }
+
     return {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${token}', //
+      'Authorization': 'Bearer ${session.token}',
     };
   }
 
@@ -52,7 +50,6 @@ class OwnerBookingRemoteDataSourceImpl
       Uri.parse(ApiEndpoints.OwnerBookingRequests),
       headers: await _headers(),
     );
-
     final body = json.decode(response.body);
 
     if (response.statusCode == 200 && body['status'] == true) {
@@ -60,9 +57,8 @@ class OwnerBookingRemoteDataSourceImpl
           .map((e) => OwnerBookingModel.fromJson(e))
           .toList();
     }
-
-    _handleResponse(response);
-    return [];
+  // _handleResponse(response);
+      return [];
   }
 
   @override
@@ -126,18 +122,26 @@ class OwnerBookingRemoteDataSourceImpl
     _handleResponse(response);
   }
 }
-Future<void> _handleResponse(http.Response response) {
+
+Future<void> _handleResponse(http.Response response) async {
+  final body = json.decode(response.body);
+
+  if ((response.statusCode == 200 || response.statusCode == 201) &&
+      body['status'] == true) {
+    return;
+  }
+
+  if (response.statusCode == 200 && body['status'] == false) {
+    throw ConflictException();
+  }
+
   switch (response.statusCode) {
-    case 200:
-      return Future.value(null);
     case 401:
       throw UnAuthorizedException();
     case 403:
       throw ForbiddenException();
     case 404:
       throw NotFoundException();
-    case 409:
-      throw ConflictException();
     case 422:
       throw UnprocessableEntityException();
     case 500:

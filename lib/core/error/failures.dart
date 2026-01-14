@@ -45,7 +45,7 @@ class AuthenticationFailure extends Failure {
 }
 
 class BookingFailure extends Failure{
-  BookingFailure():super('Booking Failure');
+  BookingFailure(param0):super('Booking Failure');
 
 }
 

@@ -1,3 +1,4 @@
+import '../../../booking/domain/entities/payment_entity.dart';
 
 class BookingUpdateRequestEntity {
   final int id;
@@ -5,13 +6,14 @@ class BookingUpdateRequestEntity {
   final String status;
   final DateTime update_start_date;
   final DateTime update_end_date;
- // final String paymentMethod,
+  final PaymentEntity payment;
+
   BookingUpdateRequestEntity({
     required this.id,
     required this.booking_id,
     required this.status,
     required this.update_start_date,
     required this.update_end_date,
-    //required this.paymentMethod,
+    required this.payment,
   });
 }

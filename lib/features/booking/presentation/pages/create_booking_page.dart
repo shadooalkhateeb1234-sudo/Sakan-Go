@@ -79,7 +79,7 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
       return;
     }
 
-    final totalPrice = (endDate!.difference(startDate!).inDays + 1) * 100;
+   // final totalPrice = (endDate!.difference(startDate!).inDays + 1) * 100;
 
     context.read<BookingBloc>().add(
       CreateBookingEvent(
@@ -88,13 +88,10 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
         end_date: endDate!,
         latitude: latitude!,
         longitude: longitude!,
-        paymentMethod: PaymentEntity(
-          method: selectedPayment!.value,
-          status: 'pending',
-          amount: totalPrice.toDouble(),
-        ),
+        paymentMethod: selectedPayment!,
       ),
     );
+
   }
 
   void _showError(String msg) {

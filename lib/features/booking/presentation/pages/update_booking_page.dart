@@ -60,20 +60,19 @@ class _UpdateBookingPageState extends State<UpdateBookingPage> {
       return;
     }
 
-    final totalPrice = (endDate.difference(startDate).inDays + 1) * 100;
+   // final totalPrice = (endDate.difference(startDate).inDays + 1) * 100;
 
     context.read<BookingBloc>().add(
-      RequestBookingUpdateEvent(
+      UpdateBookingEvent(
         booking_id: widget.booking_id,
-        startDate: startDate,
-        endDate: endDate,
-        paymentMethod: PaymentEntity(
-          method: selectedPayment!.value,
-          status: 'pending',
-          amount: totalPrice.toDouble(),
-        ),
+        start_date: startDate,
+        end_date: endDate,
+        paymentMethod: selectedPayment!,
       ),
     );
+
+
+
   }
 
   @override
