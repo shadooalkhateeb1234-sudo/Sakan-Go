@@ -29,19 +29,22 @@ class OwnerBookingRemoteDataSourceImpl
     required this.client,
     required this.userSessionLocalDataSource,
   });
-
   Future<Map<String, String>> _headers() async {
-    final session = await userSessionLocalDataSource.getUserSession();
-    if (session.token == null || session.token!.isEmpty) {
-      throw UnAuthorizedException();
+    String token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3VzZXIvdmVyaWZ5LXBob25lLW90cCIsImlhdCI6MTc2ODIzODAxMiwiZXhwIjoxNzY4ODQyODEyLCJuYmYiOjE3NjgyMzgwMTIsImp0aSI6Ijc2WHhEN1RHTXFlZDE2dm4iLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.cawtsQLlg4IOpJGKVOGXhj5mMQsSCyr8isat0YLXdDk';
+    // final session = await userSessionLocalDataSource.getUserSession();
+    // if (session.token == null || session.token!.isEmpty) {
+    //   throw UnAuthorizedFailure();
+    // }
+    if (token == null || token!.isEmpty) {
+      throw UnAuthorizedFailure();
     }
-
     return {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${session.token}',
+      'Authorization': 'Bearer ${token}', //
     };
   }
+
 
   @override
   Future<List<OwnerBookingEntity>> getOwnerBookings() async {

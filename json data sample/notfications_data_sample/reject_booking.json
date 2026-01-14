@@ -1,0 +1,5 @@
+{
+  "type": "booking",
+  "action": "rejected",
+  "booking_id": "12"
+}

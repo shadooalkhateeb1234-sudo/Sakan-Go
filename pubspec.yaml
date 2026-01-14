@@ -45,6 +45,7 @@ dependencies:
   dartz: ^0.10.1
   equatable: ^2.0.7
   internet_connection_checker: ^3.0.1
+  flutter_local_notifications: ^18.0.1
   http: ^1.6.0
   shared_preferences: ^2.5.4
   flex_color_scheme:
@@ -58,9 +59,10 @@ dependencies:
   package_info_plus: ^9.0.0
   flutter_custom_clippers: ^2.1.0
   intl_phone_field:
-  geolocator:
-  google_maps_flutter:
-  dio:
+  geolocator: ^11.0.0
+  google_maps_flutter: ^2.6.1
+  google_maps_flutter_web: ^0.5.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -81,7 +83,7 @@ flutter_launcher_icons:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^6.0.0
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

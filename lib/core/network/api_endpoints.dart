@@ -1,7 +1,7 @@
 
 class ApiEndpoints {
 
-  static const  baseUrl = 'https://weepiest-reclinate-cataleya.ngrok-free.dev/';
+  static const  baseUrl = 'https://erethismic-britta-forebearingly.ngrok-free.dev/';
 
   //booking
   static const  booking ='${baseUrl}api/booking';

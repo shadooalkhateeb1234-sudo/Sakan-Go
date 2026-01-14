@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sakan_go/core/localization/app_localizations.dart';
 import '../manager/booking_bloc.dart';
 import '../manager/booking_event.dart';
 import 'booking_permissions.dart';
@@ -18,14 +19,14 @@ class CancelBookingDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!BookingStateMachine.can(status, BookingAction.cancel)) {
-      return const AlertDialog(
-        content: Text('This booking cannot be cancelled'),
+      return   AlertDialog(
+        content: Text('This_booking_cannot_be_cancelled'.tr(context)),
       );
     }
 
     return AlertDialog(
-      title: const Text('Cancel Booking'),
-      content: const Text('Are you sure you want to cancel this booking?'),
+      title:   Text('cancel_booking'.tr(context)),
+      content:   Text('Are_you_sure_you_want_to_cancel_this_booking?'.tr(context)),
       actions: [
         TextButton(
           onPressed: () => context.pop(),

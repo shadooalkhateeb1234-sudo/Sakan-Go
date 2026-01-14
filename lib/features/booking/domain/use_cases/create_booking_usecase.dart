@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:sakan_go/features/booking/domain/entities/payment_entity.dart';
 import '../../../../core/error/failures.dart';
 import '../repositories/booking_repository.dart';
 
@@ -13,7 +14,7 @@ class CreateBookingUseCase {
     required DateTime end_date,
     required double latitude,
     required double longitude,
-    required String paymentMethod,
+    required PaymentEntity paymentMethod,
   }) {
     return repository.bookApartment(
       apartment_id: apartment_id,
@@ -25,6 +26,3 @@ class CreateBookingUseCase {
     );
   }
 }
-
-
-

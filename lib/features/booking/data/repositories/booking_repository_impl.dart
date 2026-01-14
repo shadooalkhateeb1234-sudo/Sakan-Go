@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:sakan_go/features/booking/domain/entities/booking_entity.dart';
+import 'package:sakan_go/features/booking/domain/entities/payment_entity.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/network/network_info.dart';
 import '../../../user_session/data/local/data_sources/user_session_local_data_source.dart';
-import '../../domain/entities/booking_update_request_entity.dart';
 import '../../domain/repositories/booking_repository.dart';
 import '../data_sources/booking_remote_data_source.dart';
 
@@ -42,7 +42,7 @@ class BookingRepositoryImpl implements BookingRepository {
     required DateTime end_date,
     required double latitude,
     required double longitude,
-    required String paymentMethod,
+    required PaymentEntity paymentMethod,
   }) async {
     if (!await networkInfo.isConnected) {
       return Left(NetworkFailure());
@@ -78,6 +78,30 @@ class BookingRepositoryImpl implements BookingRepository {
   }
 
   @override
+  Future<Either<Failure, Unit>> updateBooking({
+      required int booking_id,
+      required DateTime startDate,
+      required DateTime endDate,
+      required PaymentEntity paymentMethod,
+}  ) async {
+    if (!await networkInfo.isConnected) {
+      return Left(NetworkFailure());
+    }
+    try {
+      await remote.updateBooking(
+        booking_id: booking_id,
+        startDate: startDate,
+        endDate: endDate,
+        paymentMethod: paymentMethod,
+      );
+      return Right(unit);
+    } on Failure catch (e) {
+      return Left(e);
+    } catch (_) {
+      return Left(ServerFailure());
+    }
+  }
+  @override
   Future<Either<Failure, Unit>> rejectBooking(int booking_id) async {
     if (!await networkInfo.isConnected) {
       return Left(NetworkFailure());
@@ -90,66 +114,26 @@ class BookingRepositoryImpl implements BookingRepository {
       return Left(e);
     }
   }
-
   @override
-  Future<Either<Failure, List<BookingUpdateRequestEntity>>> requestBookingUpdate({
-      required int booking_id,
-      required DateTime startDate,
-      required DateTime endDate,
-      required String paymentMethod,
-}  ) async {
+  Future<Either<Failure, Unit>> createReview({
+    required int bookingId,
+    required int stars,
+    String? comment,
+  }) async {
     if (!await networkInfo.isConnected) {
       return Left(NetworkFailure());
     }
     try {
-      final data = await remote.requestBookingUpdate(
-        booking_id: booking_id,
-        startDate: startDate,
-        endDate: endDate,
-        paymentMethod: paymentMethod,
+      await remote.createReview(
+        bookingId: bookingId,
+        stars: stars,
+        comment: comment,
       );
-      return Right(data);
+      return Right(unit);
     } on Failure catch (e) {
       return Left(e);
     } catch (_) {
       return Left(ServerFailure());
     }
   }
-
-  // @override
-  // Future<Either<Failure, Unit>> updateBooking({
-  //   required int booking_id,
-  //   required DateTime newStart,
-  //   required DateTime newEnd,
-  //   required String paymentMethod,
-  // }) async {
-  //   if (!await networkInfo.isConnected) {
-  //     return Left(NetworkFailure());
-  //   }
-  //
-  //   try {
-  //     await remote.updateBooking(
-  //       booking_id: booking_id,
-  //       newStart: newStart,
-  //       newEnd: newEnd,
-  //       paymentMethod: paymentMethod,
-  //     );
-  //     return Right(unit);
-  //   } on Failure catch (e) {
-  //     return Left(e);
-  //   } catch (_) {
-  //     return Left(ServerFailure());
-  //   }
-  // }
-
-
-
-  }
-
-
-
-
-
-
-
-//.............................
+}

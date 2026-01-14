@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../../../../core/error/failures.dart';
+import '../../../../core/notifications/firebase_notification_service.dart';
+import '../../../../core/notifications/notification_payload.dart';
 import '../../../booking/domain/entities/booking_update_request_entity.dart';
 import '../../domain/entities/owner_booking_entity.dart';
 import '../../domain/use_cases/get_owner_update_requests.dart';
@@ -20,6 +22,8 @@ class OwnerBookingBloc extends Bloc<OwnerBookingEvent, OwnerBookingState> {
   final GetOwnerUpdateRequests getUpdateRequests;
   final ApproveUpdateRequest approveUpdateRequest;
   final RejectUpdateRequest rejectUpdateRequest;
+  int _bookingsCount = 0;
+  int _updatesCount = 0;
 
   OwnerBookingBloc({
     required this.getBookings,
@@ -39,24 +43,56 @@ class OwnerBookingBloc extends Bloc<OwnerBookingEvent, OwnerBookingState> {
 
   /* ---------------- Bookings ---------------- */
 
+  // Future<void> _loadBookings(
+  //     LoadOwnerBookings event, Emitter emit) async {
+  //   emit(OwnerBookingLoading());
+  //
+  //   final result = await getBookings();
+  //
+  //   result.fold(
+  //         (failure) =>
+  //         emit(OwnerBookingError(_mapFailureToMessage(failure))),
+  //         (bookings) => emit(OwnerBookingLoaded(bookings)),
+  //   );
+  // }
+
   Future<void> _loadBookings(
-      LoadOwnerBookings event, Emitter emit) async {
+      LoadOwnerBookings event,
+      Emitter emit,
+      ) async {
     emit(OwnerBookingLoading());
 
     final result = await getBookings();
 
     result.fold(
-          (failure) =>
-          emit(OwnerBookingError(_mapFailureToMessage(failure))),
-          (bookings) => emit(OwnerBookingLoaded(bookings)),
+          (failure) => emit(
+        OwnerBookingError(_mapFailureToMessage(failure)),
+      ),
+          (bookings) {
+        _bookingsCount = bookings.length;
+
+        emit(OwnerBookingLoaded(bookings));
+        emit(
+          OwnerBookingCounters(
+            bookingsCount: _bookingsCount,
+            updatesCount: _updatesCount,
+          ),
+        );
+      },
     );
   }
+
 
   Future<void> _approveBooking(
       ApproveBookingEvent event, Emitter emit) async {
     emit(OwnerBookingActionLoading());
 
     final result = await approveBooking(event.id);
+
+    FirebaseNotificationService.instance.sendToTenant(
+      bookingId: event.id,
+      action: BookingAction.approved,
+    );
 
     await result.fold(
           (failure) async =>
@@ -65,12 +101,18 @@ class OwnerBookingBloc extends Bloc<OwnerBookingEvent, OwnerBookingState> {
     );
   }
 
+
+
   Future<void> _rejectBooking(
       RejectBookingEvent event, Emitter emit) async {
     emit(OwnerBookingActionLoading());
 
     final result = await rejectBooking(event.id);
 
+    FirebaseNotificationService.instance.sendToTenant(
+      bookingId: event.id,
+      action: BookingAction.rejected,
+    );
     await result.fold(
           (failure) async =>
           emit(OwnerBookingError(_mapFailureToMessage(failure))),
@@ -80,16 +122,41 @@ class OwnerBookingBloc extends Bloc<OwnerBookingEvent, OwnerBookingState> {
 
   /* ---------------- Update Requests ---------------- */
 
+  // Future<void> _loadUpdateRequests(
+  //     LoadOwnerUpdateRequests event, Emitter emit) async {
+  //   emit(OwnerUpdateLoading());
+  //
+  //   final result = await getUpdateRequests();
+  //
+  //   result.fold(
+  //         (failure) =>
+  //         emit(OwnerUpdateError(_mapFailureToMessage(failure))),
+  //         (requests) => emit(OwnerUpdateLoaded(requests)),
+  //   );
+  // }
   Future<void> _loadUpdateRequests(
-      LoadOwnerUpdateRequests event, Emitter emit) async {
+      LoadOwnerUpdateRequests event,
+      Emitter emit,
+      ) async {
     emit(OwnerUpdateLoading());
 
     final result = await getUpdateRequests();
 
     result.fold(
-          (failure) =>
-          emit(OwnerUpdateError(_mapFailureToMessage(failure))),
-          (requests) => emit(OwnerUpdateLoaded(requests)),
+          (failure) => emit(
+        OwnerUpdateError(_mapFailureToMessage(failure)),
+      ),
+          (requests) {
+        _updatesCount = requests.length;
+
+        emit(OwnerUpdateLoaded(requests));
+        emit(
+          OwnerBookingCounters(
+            bookingsCount: _bookingsCount,
+            updatesCount: _updatesCount,
+          ),
+        );
+      },
     );
   }
 
@@ -99,6 +166,10 @@ class OwnerBookingBloc extends Bloc<OwnerBookingEvent, OwnerBookingState> {
 
     final result = await approveUpdateRequest(event.requestId);
 
+    FirebaseNotificationService.instance.sendToTenant(
+      bookingId: event.requestId,
+      action: BookingAction.updateApproved,
+    );
     await result.fold(
           (failure) async =>
           emit(OwnerUpdateError(_mapFailureToMessage(failure))),
@@ -112,6 +183,10 @@ class OwnerBookingBloc extends Bloc<OwnerBookingEvent, OwnerBookingState> {
 
     final result = await rejectUpdateRequest(event.requestId);
 
+    FirebaseNotificationService.instance.sendToTenant(
+      bookingId: event.requestId,
+      action: BookingAction.updateRejected,
+    );
     await result.fold(
           (failure) async =>
           emit(OwnerUpdateError(_mapFailureToMessage(failure))),

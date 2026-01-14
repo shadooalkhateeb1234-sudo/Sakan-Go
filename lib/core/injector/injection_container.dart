@@ -264,7 +264,7 @@ Future<void> init() async
   di.registerLazySingleton(() => GetUserBookingsUsecase(di()));
  // di.registerLazySingleton(() => UpdateBookingUseCase(di()));
   di.registerLazySingleton(() => RejectBookingUseCase(di()));
-  di.registerLazySingleton(() => RequestBookingUpdateUseCase(di()));
+  di.registerLazySingleton(() => UpdateBookingUseCase(di()));
 
   //! Bloc
   di.registerFactory(
@@ -273,9 +273,10 @@ Future<void> init() async
           createBooking: di(),
           cancelBooking: di(),
           getUserBookings: di(),
-       //   updateBooking: di(),
+          updateBooking: di(),
           rejectBooking: di(),
-          requestBookingUpdate: di(),
+          createReview: di(),
+
         ),
   );
   //.................... Review........................

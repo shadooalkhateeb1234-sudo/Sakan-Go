@@ -1,0 +1,5 @@
+{
+  "type": "booking",
+  "action": "updateApproved",
+  "booking_id": "12"
+}

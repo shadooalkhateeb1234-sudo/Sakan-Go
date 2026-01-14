@@ -1,5 +1,5 @@
 class RouteName {
- // static const String base_url = "http://127.0.0.1:8000/api/booking";
+
   //intro
   static const String splash = '/';
   static const String onboarding = '/onboarding';

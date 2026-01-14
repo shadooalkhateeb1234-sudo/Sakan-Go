@@ -98,6 +98,9 @@
   "error_conflict": "يوجد تعارض، الرجاء التحديث",
   "error_invalid_data": "البيانات المدخلة غير صحيحة",
   "error_server": "خطأ في الخادم، حاول لاحقًا",
-  "unexpected_error": "حدث خطأ غير متوقع"
-  
+  "unexpected_error": "حدث خطأ غير متوقع",
+  "No_bookings_yet": "لا حجوزات حجوزات لحد الان",
+  "Are_you_sure_you_want_to_cancel_this_booking?": "هل انت متأكد انك تود الغاء هذا الحجز؟",
+  "This_booking_cannot_be_cancelled": "هذا الحجز لا يمكن الغاؤه !",
+  "No_bookings": "لا حجوزات"
 }

@@ -51,12 +51,19 @@ class BookingPlaygroundPage extends StatelessWidget {
 
           _ActionButton(
             icon: Icons.cancel,
-            title: 'Cancel Booking #1',
+            title: 'Cancel Booking ',
             onTap: () {
               context.push(RouteName.Bookingcancel);
             },
           ),
 
+          _ActionButton(
+            icon: Icons.notifications,
+            title: 'Notification',
+            onTap: () {
+              context.go('/notifications');
+            },
+          ),
           _ActionButton(
             icon: Icons.admin_panel_settings,
             title: 'Owner Bookings',

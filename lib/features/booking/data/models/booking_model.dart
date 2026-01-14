@@ -1,3 +1,5 @@
+import 'package:sakan_go/features/booking/data/models/payment_model.dart';
+
 import '../../domain/entities/booking_entity.dart';
 
 
@@ -10,6 +12,7 @@ class BookingModel extends BookingEntity {
     required super.end_date,
     required super.total_price,
     required super.status,
+    required super.payment,
   });
 
   factory BookingModel.fromJson(Map<String, dynamic> json) {
@@ -21,6 +24,7 @@ class BookingModel extends BookingEntity {
       end_date: DateTime.parse(json['end_date']),
       total_price: json['total_price'] ?? 0,
       status: json['status'],
+      payment: PaymentModel.fromJson(json['payment']),
     );
   }
 
@@ -48,6 +52,7 @@ class BookingModel extends BookingEntity {
       end_date: end_date ?? this.end_date,
       status: status ?? this.status,
       total_price: total_price ?? this.total_price,
+      payment: payment,
     );
   }
 }

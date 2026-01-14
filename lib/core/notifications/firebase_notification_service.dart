@@ -1,11 +1,12 @@
-import 'dart:developer';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-
-import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sakan_go/core/notifications/presentation/blocs/notification_bloc.dart';
+import '../routing/app_router.dart';
+import 'domain/entity/app_notification_entity.dart';
+import 'repository/notification_dispatcher.dart';
+import 'presentation/utils/notification_navigator.dart';
+import 'notification_payload.dart';
 
 class FirebaseNotificationService {
   FirebaseNotificationService._();
@@ -13,15 +14,15 @@ class FirebaseNotificationService {
 
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
 
-  /// init must be called after login
-  Future<void> init(BuildContext context) async {
+  /// 🔹 INIT
+  Future<void> init() async {
     await _requestPermission();
-    await _getAndSyncToken();
-    _listenForeground(context);
-    _listenOpenedApp(context);
+    await _configureForeground();
+    await _configureBackground();
+    await _logToken();
   }
 
-  /// 🔐 Permissions (iOS + Android 13)
+  /// 🔐 PERMISSIONS
   Future<void> _requestPermission() async {
     await _messaging.requestPermission(
       alert: true,
@@ -30,149 +31,96 @@ class FirebaseNotificationService {
     );
   }
 
-  /// 📱 Get FCM token & send to backend
-  Future<void> _getAndSyncToken() async {
+  /// 📲 TOKEN
+  Future<void> _logToken() async {
     final token = await _messaging.getToken();
-    if (token != null) {
-      debugPrint('🔥 FCM Token: $token');
+    if (token == null) return;
 
-      /// TODO:
-      /// Send token to backend
-      /// POST /api/store-fcm-token
-    }
+    debugPrint('🔥 FCM TOKEN: $token');
 
-    FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
-      /// TODO: update backend token
-    });
-  }
+    /// send to backend
+    await _sendTokenToBackend(token);
 
-  /// 🔔 App in FOREGROUND
-  void _listenForeground(BuildContext context) {
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      debugPrint('🔔 Foreground notification');
-
-      final data = message.data;
-      _handleInAppNotification(context, data);
-    });
-  }
-
-  /// 🚀 App opened from notification
-  void _listenOpenedApp(BuildContext context) {
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      debugPrint('🚀 Notification clicked');
-      _handleNavigation(context, message.data);
-    });
-  }
-
-  /// 🧠 Handle in-app notification (SnackBar / Dialog)
-  void _handleInAppNotification(
-      BuildContext context,
-      Map<String, dynamic> data,
-      ) {
-    final title = data['title'] ?? 'Notification';
-    final body = data['body'] ?? '';
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('$title\n$body'),
-        action: SnackBarAction(
-          label: 'Open',
-          onPressed: () => _handleNavigation(context, data),
-        ),
-      ),
+    /// listen refresh
+    FirebaseMessaging.instance.onTokenRefresh.listen(
+          (newToken) async {
+        await _sendTokenToBackend(newToken);
+      },
     );
   }
 
-  /// 🧭 Navigation handler (GoRouter)
-  void _handleNavigation(
-      BuildContext context,
-      Map<String, dynamic> data,
-      ) {
-    final type = data['type'];
 
-    switch (type) {
-      case 'NEW_BOOKING':
-        context.go('/owner/bookings');
-        break;
+  /// 🟢 FOREGROUND
 
-      case 'BOOKING_APPROVED':
-      case 'BOOKING_REJECTED':
-        context.go('/my-bookings');
-        break;
+  Future<void> _configureForeground() async {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      debugPrint('📩 Foreground Notification');
 
-      case 'UPDATE_REQUEST':
-        context.go('/owner/bookings');
-        break;
+      final payload = NotificationPayload.fromMap(message.data);
 
-      case 'UPDATE_APPROVED':
-      case 'UPDATE_REJECTED':
-        context.go('/my-bookings');
-        break;
+      /// 1️⃣ تحديث Blocs (Bookings / Owner)
+      NotificationDispatcher.dispatch(payload);
 
-      default:
-        debugPrint('⚠️ Unknown notification type');
-    }
+      /// 2️⃣ تخزين الإشعار في Inbox
+      final context = rootNavigatorKey.currentContext;
+      if (context != null) {
+        context.read<NotificationBloc>().add(
+          AddNotification(
+            AppNotification(
+              id: DateTime.now().millisecondsSinceEpoch.toString(),
+              title: message.notification?.title ?? 'Sakan Go',
+              body: message.notification?.body ?? '',
+              payload: payload,
+              date: DateTime.now(),
+            ),
+          ),
+        );
+      }
+    });
   }
-}
 
-// typedef NotificationTapCallback = void Function(Map<String, dynamic> data);
-//
-// class FirebaseNotificationService {
-//   FirebaseNotificationService._();
-//   static final instance = FirebaseNotificationService._();
-//
-//   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
-//
-//   NotificationTapCallback? onNotificationTap;
-//
-//   /// 🔹 Init (call after login)
-//   Future<void> init() async {
-//     await _requestPermission();
-//     await _logToken();
-//     _listenForeground();
-//     _listenOpenedApp();
-//   }
-//
-//   /// 🔹 Permissions
-//   Future<void> _requestPermission() async {
-//     final settings = await _messaging.requestPermission(
-//       alert: true,
-//       badge: true,
-//       sound: true,
-//     );
-//
-//     log('🔔 Notification permission: ${settings.authorizationStatus}');
-//   }
-//
-//   /// 🔹 Token
-//   Future<String?> getToken() async {
-//     return await _messaging.getToken();
-//   }
-//
-//   Future<void> _logToken() async {
-//     final token = await getToken();
-//     log('🔥 FCM TOKEN: $token');
-//   }
-//
-//   /// 🔹 Foreground
-//   void _listenForeground() {
-//     FirebaseMessaging.onMessage.listen((message) {
-//       log('📩 Foreground message: ${message.data}');
-//     });
-//   }
-//
-//   /// 🔹 When notification clicked
-//   void _listenOpenedApp() {
-//     FirebaseMessaging.onMessageOpenedApp.listen((message) {
-//       if (onNotificationTap != null) {
-//         onNotificationTap!(message.data);
-//       }
-//     });
-//   }
-// }
-//
-// /// 🔹 Background handler (top-level)
-// Future<void> firebaseBackgroundHandler(RemoteMessage message) async {
-//   await Firebase.initializeApp();
-//   log('📦 Background message: ${message.data}');
-// }
+
+  /// 🔵 BACKGROUND / TERMINATED
+  Future<void> _configureBackground() async {
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      debugPrint('📩 Opened from Notification');
+      _handleMessage(message, fromBackground: true);
+    });
+  }
+
+  /// 🧠 MESSAGE HANDLER
+  /// import 'notification_payload.dart';
+  /// void _handleMessage(
+
+  void _handleMessage(
+    RemoteMessage message, {
+    required bool fromBackground,
+  }) {
+    final payload = NotificationPayload.fromMap(message.data);
+
+    NotificationDispatcher.dispatch(payload);
+    if (!fromBackground) {
+      NotificationNavigator.navigate(payload);
+    }
+    debugPrint('🔔 Parsed Payload: ${payload.type} / ${payload.action}');
+
+  }
+
+  void sendToTenant({
+    required int bookingId,
+    required BookingAction action,
+  }) {
+    // TODO:
+    // POST /notifications/send
+    // body:
+    // {
+    //   booking_id: bookingId,
+    //   action: action.name,
+    //   target: "tenant"
+    // }
+  }
+
+  Future<void> _sendTokenToBackend(String newToken) async {}
+
+
+}

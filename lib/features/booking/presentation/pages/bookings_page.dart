@@ -56,8 +56,8 @@ class _BookingsPageState extends State<BookingsPage>
             return Center(child: Text(state.message));
           }
           if (state is BookingEmpty) {
-            return const Center(
-              child: Text('No bookings yet'),
+            return  Center(
+              child: Text('No_bookings_yet'),
             );
           }
 

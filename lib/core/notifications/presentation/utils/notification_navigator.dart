@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import '../routing/app_router.dart';
-import 'notification_payload.dart';
+import '../../../routing/app_router.dart';
+import '../../notification_payload.dart';
 
 
 class NotificationNavigator {
@@ -28,5 +27,5 @@ class NotificationNavigator {
         context.go('/owner/bookings');
     }
   }
-  
+
 }

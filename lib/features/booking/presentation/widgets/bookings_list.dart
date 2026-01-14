@@ -1,3 +1,4 @@
+import 'package:sakan_go/core/localization/app_localizations.dart';
 import '../../../../core/routing/routes_name.dart';
 import '../../domain/entities/booking_entity.dart';
 import 'package:go_router/go_router.dart';
@@ -11,7 +12,7 @@ class BookingsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (bookings.isEmpty) {
-      return const Center(child: Text('No bookings'));
+      return Center(child: Text('No_bookings'.tr(context)));
     }
 
     return ListView.separated(

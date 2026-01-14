@@ -1,3 +1,4 @@
+import 'package:sakan_go/core/network/api_endpoints.dart';
 import 'package:sakan_go/core/routing/routes_name.dart';
 import '../../features/Review/presentation/manager/rating/rating_bloc.dart';
 import '../../features/Review/presentation/manager/review/review_bloc.dart';
@@ -33,10 +34,20 @@ import '../../features/profile/presentation/bloc/profile_bloc.dart';
 
 import '../../features/admin_approval/presentation/pages/admin_approval_page.dart';
 import '../../features/admin_approval/presentation/bloc/admin_approval_bloc.dart';
+import '../notifications/presentation/pages/notification_inbox_page.dart';
+
+
+
+final GlobalKey<NavigatorState> rootNavigatorKey =
+GlobalKey<NavigatorState>();
 
 class AppRouter {
+
   static final GoRouter appRouter = GoRouter(
+
     initialLocation:'/booking-playground',
+    navigatorKey: rootNavigatorKey,
+
     routes: [
       GoRoute(
         path: '/booking-playground',
@@ -221,6 +232,23 @@ class AppRouter {
 
         },
       ),
+      ///
+      GoRoute(
+        path: RouteName.Ownerbookings,
+        builder: (context, state) {
+          final tab = state.uri.queryParameters['tab'];
+          return OwnerBookingsTabsPage(
+            initialTab: tab == 'updates' ? 1 : 0,
+          );
+        },
+      ),
+      GoRoute(
+        path: '/notifications',
+        builder: (_, __) => const NotificationInboxPage(),
+      ),
+
+
+
     ],
   );
 }

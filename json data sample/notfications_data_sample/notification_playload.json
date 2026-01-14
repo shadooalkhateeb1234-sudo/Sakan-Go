@@ -1,0 +1,8 @@
+{
+  "type": "booking",
+  "action": "new | approve | reject | update_request | update_approved | update_rejected",
+  "booking_id": 12,
+  "apartment_id": 5,
+  "owner_id": 3,
+  "tenant_id": 9
+}

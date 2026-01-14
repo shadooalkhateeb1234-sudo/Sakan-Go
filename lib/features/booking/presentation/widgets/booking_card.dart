@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:sakan_go/features/booking/presentation/widgets/booking_permissions.dart';
 import '../../../../core/routing/routes_name.dart';
 import '../../domain/entities/booking_entity.dart';
 
 class BookingCard extends StatelessWidget {
   final BookingEntity booking;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const BookingCard({
     super.key,
     required this.booking,
-    required this.onTap,
+    this.onTap,
   });
 
   Color _statusColor(ColorScheme scheme) {
@@ -67,107 +66,100 @@ class BookingCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final color = _statusColor(scheme);
     final dateFormat = DateFormat('dd MMM yyyy');
+    final canEdit = booking.status == 'pending' || booking.status == 'confirmed';
 
-    void _openRate(BuildContext context) {
-      context.push(
-        '${RouteName.createReview}/${booking.id}/${booking.apartment_id}',
-      );
-
-    }
-
-    return Opacity(
-      opacity: BookingStateMachine.can(booking.status, BookingAction.edit) ? 1 : 0.6,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(16),
-        onTap: BookingStateMachine.can(booking.status, BookingAction.edit) ? onTap : null,
-        child: Card(
-          elevation: 1.5,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                /// STATUS
-                Row(
-                  children: [
-                    Chip(
-                      avatar: Icon(_statusIcon(), size: 16, color: color),
-                      label: Text(
-                        booking.status.toUpperCase(),
-                        style: TextStyle(
-                          color: color,
-                          fontWeight: FontWeight.w600,
-                        ),
+    return InkWell(
+      onTap: canEdit ? onTap : null,
+      borderRadius: BorderRadius.circular(16),
+      child: Card(
+        elevation: 1.5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /// STATUS
+              Row(
+                children: [
+                  Chip(
+                    avatar: Icon(_statusIcon(), size: 16, color: color),
+                    label: Text(
+                      booking.status.toUpperCase(),
+                      style: TextStyle(
+                        color: color,
+                        fontWeight: FontWeight.w600,
                       ),
-                      backgroundColor: color.withOpacity(.12),
-                      side: BorderSide(color: color.withOpacity(.4)),
                     ),
-                    const Spacer(),
-                    Icon(Icons.home_outlined, color: scheme.primary),
-                  ],
-                ),
-
-                const SizedBox(height: 10),
-
-                /// DATE RANGE
-                Text(
-                  '${dateFormat.format(booking.start_date)} → ${dateFormat.format(booking.end_date)}',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: scheme.onSurfaceVariant),
-                ),
-
-                const SizedBox(height: 6),
-
-                /// APARTMENT
-                Text(
-                  'Apartment #${booking.apartment_id}',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-
-                const SizedBox(height: 6),
-
-                Text(
-                  'Total price: ${booking.total_price}',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(fontWeight: FontWeight.w600),
-                ),
-
-                const SizedBox(height: 6),
-
-                /// STATUS HINT
-                Text(
-                  _statusHint(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(color: scheme.outline),
-                ),
-         if (BookingStateMachine.can(booking.status, BookingAction.reviewRate))
-            ElevatedButton.icon(
-              icon: const Icon(Icons.star, color: Colors.amber),
-              label: const Text('Rate apartment'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: scheme.surfaceVariant,
-                foregroundColor: scheme.onSurface,
-                elevation: 0,
+                    backgroundColor: color.withOpacity(.12),
+                    side: BorderSide(color: color.withOpacity(.4)),
+                  ),
+                  const Spacer(),
+                  if (canEdit)
+                    Icon(Icons.edit, color: scheme.primary),
+                ],
               ),
-              onPressed: () => _openRate(context),
-                ),
 
-              ],
-            ),
+              const SizedBox(height: 10),
+
+              /// DATE RANGE
+              Text(
+                '${dateFormat.format(booking.start_date)} → ${dateFormat.format(booking.end_date)}',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: scheme.onSurfaceVariant),
+              ),
+
+              const SizedBox(height: 6),
+
+              /// APARTMENT
+              Text(
+                'Apartment #${booking.apartment_id}',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+
+              const SizedBox(height: 6),
+
+              Text(
+                'Total price: ${booking.total_price}',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(fontWeight: FontWeight.w600),
+              ),
+
+              const SizedBox(height: 6),
+
+              /// STATUS HINT
+              Text(
+                _statusHint(),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(color: scheme.outline),
+              ),
+              if (booking.status == 'completed')
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.star, color: Colors.amber),
+                  label: const Text('Rate apartment'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: scheme.surfaceVariant,
+                    foregroundColor: scheme.onSurface,
+                    elevation: 0,
+                  ),
+                  onPressed: () {
+                    context.push(
+                      '${RouteName.createReview}/${booking.id}',
+                    );
+                  },
+                ),
+            ],
           ),
         ),
       ),
     );
-
   }
 }
-//............

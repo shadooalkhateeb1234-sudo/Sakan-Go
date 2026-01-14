@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sakan_go/core/localization/app_localizations.dart';
+import 'package:sakan_go/features/booking/domain/entities/payment_entity.dart';
 import '../../../../core/location/location_service.dart';
 import '../../../../core/widget/location_preview_map.dart';
 import '../../domain/entities/payment_method.dart';
@@ -78,6 +79,8 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
       return;
     }
 
+    final totalPrice = (endDate!.difference(startDate!).inDays + 1) * 100;
+
     context.read<BookingBloc>().add(
       CreateBookingEvent(
         apartment_id: widget.apartment_id,
@@ -85,7 +88,11 @@ class _CreateBookingPageState extends State<CreateBookingPage> {
         end_date: endDate!,
         latitude: latitude!,
         longitude: longitude!,
-        paymentMethod: selectedPayment!.value,
+        paymentMethod: PaymentEntity(
+          method: selectedPayment!.value,
+          status: 'pending',
+          amount: totalPrice.toDouble(),
+        ),
       ),
     );
   }

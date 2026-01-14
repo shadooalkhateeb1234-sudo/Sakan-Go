@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sakan_go/core/localization/app_localizations.dart';
+import 'package:sakan_go/features/booking/domain/entities/payment_entity.dart';
 import '../../domain/entities/payment_method.dart';
 import '../manager/booking_bloc.dart';
 import '../manager/booking_event.dart';
@@ -59,12 +60,18 @@ class _UpdateBookingPageState extends State<UpdateBookingPage> {
       return;
     }
 
+    final totalPrice = (endDate.difference(startDate).inDays + 1) * 100;
+
     context.read<BookingBloc>().add(
       RequestBookingUpdateEvent(
         booking_id: widget.booking_id,
         startDate: startDate,
         endDate: endDate,
-        paymentMethod: selectedPayment!.value,
+        paymentMethod: PaymentEntity(
+          method: selectedPayment!.value,
+          status: 'pending',
+          amount: totalPrice.toDouble(),
+        ),
       ),
     );
   }

@@ -5,9 +5,13 @@ import '../manager/owner_booking_bloc.dart';
 import 'owner_approval_page.dart';
 import 'owner_update_requests_page.dart';
 
-
 class OwnerBookingsTabsPage extends StatefulWidget {
-  const OwnerBookingsTabsPage({super.key});
+  final int initialTab;
+
+  const OwnerBookingsTabsPage({
+    super.key,
+    this.initialTab = 0,
+  });
 
   @override
   State<OwnerBookingsTabsPage> createState() =>
@@ -16,12 +20,17 @@ class OwnerBookingsTabsPage extends StatefulWidget {
 
 class _OwnerBookingsTabsPageState extends State<OwnerBookingsTabsPage>
     with SingleTickerProviderStateMixin {
-  late TabController _controller;
+  late final TabController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = TabController(length: 2, vsync: this);
+
+    _controller = TabController(
+      length: 2,
+      vsync: this,
+      initialIndex: widget.initialTab,
+    );
 
     final bloc = context.read<OwnerBookingBloc>();
     bloc.add(LoadOwnerBookings());
@@ -38,30 +47,95 @@ class _OwnerBookingsTabsPageState extends State<OwnerBookingsTabsPage>
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('owner_bookings'.tr(context)),
-        bottom: TabBar(
-          controller: _controller,
-          indicatorColor: scheme.primary,
-          tabs: [
-            Tab(
-              icon: const Icon(Icons.home_work_outlined),
-              text: 'bookings'.tr(context),
+    return BlocBuilder<OwnerBookingBloc, OwnerBookingState>(
+      builder: (context, state) {
+        int bookingsCount = 0;
+        int updatesCount = 0;
+
+        if (state is OwnerBookingCounters) {
+          bookingsCount = state.bookingsCount;
+          updatesCount = state.updatesCount;
+        }
+
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('owner_bookings'.tr(context)),
+            bottom: TabBar(
+              controller: _controller,
+              indicatorColor: scheme.primary,
+              tabs: [
+                _buildTabBadge(
+                  icon: Icons.home_work_outlined,
+                  label: 'bookings'.tr(context),
+                  count: bookingsCount,
+                  color: scheme.primary,
+                ),
+                _buildTabBadge(
+                  icon: Icons.edit_calendar_outlined,
+                  label: 'updates'.tr(context),
+                  count: updatesCount,
+                  color: scheme.error,
+                ),
+              ],
             ),
-            Tab(
-              icon: const Icon(Icons.edit_calendar_outlined),
-              text: 'updates'.tr(context),
-            ),
-          ],
-        ),
-      ),
-      body: const TabBarView(
-        children: [
-          OwnerApprovalPage(),
-          OwnerUpdateRequestsPage(),
-        ],
-      ),
+          ),
+          body: TabBarView(
+            controller: _controller,
+            children: const [
+              OwnerApprovalPage(),
+              OwnerUpdateRequestsPage(),
+            ],
+          ),
+        );
+      },
     );
   }
+}
+
+Widget _buildTabBadge({
+  required IconData icon,
+  required String label,
+  required int count,
+  required Color color,
+}) {
+  return Tab(
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Icon(icon),
+            if (count > 0)
+              Positioned(
+                right: -6,
+                top: -6,
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: color,
+                    shape: BoxShape.circle,
+                  ),
+                  constraints: const BoxConstraints(
+                    minWidth: 18,
+                    minHeight: 18,
+                  ),
+                  child: Text(
+                    count.toString(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+        const SizedBox(width: 6),
+        Text(label),
+      ],
+    ),
+  );
 }

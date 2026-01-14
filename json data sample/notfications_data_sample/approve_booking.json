@@ -1,0 +1,6 @@
+{
+  "type": "booking",
+  "action": "approved",
+  "booking_id": "12",
+  "user_role": "tenant"
+}
