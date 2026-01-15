@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
             (
               create: (_) => di<ThemeBloc>()..add(GetThemeEvent())
           ),
-        //  BlocProvider(create: (_) => NotificationBloc()),
+          //  BlocProvider(create: (_) => NotificationBloc()),
 
         ],
         child: BlocBuilder<LanguageBloc, LanguageState>
@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
                         debugShowCheckedModeBanner: false,
                         routerConfig: AppRouter.appRouter,
                         locale: languageState.languageEntity == null
-                            ? const Locale('en')
+                            ? const Locale('ar')
                             : Locale(
                             languageState.languageEntity!.languageType.name),
 

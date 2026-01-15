@@ -1,11 +1,10 @@
 import 'package:sakan_go/features/booking/domain/entities/payment_entity.dart';
 import '../../domain/use_cases/create_booking_usecase.dart';
 import '../../domain/use_cases/cancel_booking_usecase.dart';
-import '../../domain/use_cases/reject_booking_usecase.dart';
-import '../../domain/use_cases/request_booking_update.dart';
 import '../../domain/use_cases/get_bookings_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc/bloc.dart';
+import '../../domain/use_cases/request_booking_update.dart';
 import 'booking_event.dart';
 import 'booking_state.dart';
 import 'dart:async';
@@ -15,24 +14,17 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
   final CancelBookingUseCase cancelBooking;
   final GetUserBookingsUsecase getUserBookings;
   final UpdateBookingUseCase updateBooking;
-  final RejectBookingUseCase rejectBooking;
-
 
   BookingBloc({
     required this.createBooking,
     required this.cancelBooking,
     required this.getUserBookings,
     required this.updateBooking,
-    required this.rejectBooking,
-
-
   }) : super(BookingInitial()) {
     on<GetUserBookingsEvent>(_onGetBookings);
     on<CreateBookingEvent>(_onCreateBooking);
     on<CancelBookingEvent>(_onCancelBooking);
     on<UpdateBookingEvent>(_onUpdateBooking);
-    on<RejectBookingEvent>(_onRejectBooking);
-
   }
 
   Future<void> _onGetBookings(
@@ -76,8 +68,6 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     );
   }
 
-
-
   Future<void> _onCancelBooking(
       CancelBookingEvent event,
       Emitter<BookingState> emit,
@@ -118,26 +108,4 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
       },
     );
   }
-
-
-  Future<void> _onRejectBooking(
-      RejectBookingEvent event,
-      Emitter<BookingState> emit,
-      ) async {
-    emit(BookingLoading());
-
-    final result = await rejectBooking(event.booking_id);
-
-    result.fold(
-          (failure) => emit(BookingError(failure.message)),
-          (_) {
-        emit(BookingActionSuccess(
-          'booking_rejected',
-        ));
-        add(GetUserBookingsEvent());
-      },
-    );
-  }
-
-
 }

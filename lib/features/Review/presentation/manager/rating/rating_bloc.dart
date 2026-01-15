@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:sakan_go/core/localization/app_localizations.dart';
 import '../../../../../core/error/failures.dart';
 import '../../../domain/repositories/review_repository.dart';
 import '../../../domain/use_cases/get_apartment_average_rating_usecase.dart';
@@ -30,7 +31,7 @@ class RatingBloc extends Bloc<RatingEvent, RatingState> {
     } on Failure catch (f) {
       emit(RatingError(f.message));
     } catch (_) {
-      emit(const RatingError('unexpected_error'));
+      emit(  RatingError('unexpected_error'));
     }
   }
 

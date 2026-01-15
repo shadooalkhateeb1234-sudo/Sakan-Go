@@ -21,6 +21,5 @@ abstract class BookingRepository {
     required PaymentMethod paymentMethod,
   });
 
-  Future<Either<Failure, Unit>> rejectBooking(int booking_id);
 
 }

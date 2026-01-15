@@ -94,7 +94,7 @@ class OwnerBookingBloc extends Bloc<OwnerBookingEvent, OwnerBookingState> {
       ) async {
     emit(OwnerBookingActionLoading());
 
-    final result = await approveBooking(event.bookingId);
+    final result = await rejectBooking(event.bookingId);
 
     result.fold(
           (failure) => emit(OwnerBookingError(_mapFailureToMessage(failure))),

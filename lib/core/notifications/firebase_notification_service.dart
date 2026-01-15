@@ -14,7 +14,7 @@ class FirebaseNotificationService {
 
   final FirebaseMessaging _messaging = FirebaseMessaging.instance;
 
-  /// 🔹 INIT
+  ///  INIT
   Future<void> init() async {
     await _requestPermission();
     await _configureForeground();
@@ -36,7 +36,7 @@ class FirebaseNotificationService {
     final token = await _messaging.getToken();
     if (token == null) return;
 
-    debugPrint('🔥 FCM TOKEN: $token');
+    debugPrint(' FCM TOKEN: $token');
 
     /// send to backend
     await _sendTokenToBackend(token);
@@ -50,7 +50,7 @@ class FirebaseNotificationService {
   }
 
 
-  /// 🟢 FOREGROUND
+  /// FOREGROUND
 
   Future<void> _configureForeground() async {
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
@@ -58,10 +58,10 @@ class FirebaseNotificationService {
 
       final payload = NotificationPayload.fromMap(message.data);
 
-      /// 1️⃣ تحديث Blocs (Bookings / Owner)
+      ///  Blocs (Bookings / Owner)
       NotificationDispatcher.dispatch(payload);
 
-      /// 2️⃣ تخزين الإشعار في Inbox
+      /// تخزين الإشعار في Inbox
       final context = rootNavigatorKey.currentContext;
       if (context != null) {
         context.read<NotificationBloc>().add(
@@ -80,7 +80,7 @@ class FirebaseNotificationService {
   }
 
 
-  /// 🔵 BACKGROUND / TERMINATED
+  /// BACKGROUND / TERMINATED
   Future<void> _configureBackground() async {
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       debugPrint('📩 Opened from Notification');
@@ -88,8 +88,7 @@ class FirebaseNotificationService {
     });
   }
 
-  /// 🧠 MESSAGE HANDLER
-  /// import 'notification_payload.dart';
+  ///  MESSAGE HANDLER
   /// void _handleMessage(
 
   void _handleMessage(
@@ -110,14 +109,8 @@ class FirebaseNotificationService {
     required int bookingId,
     required BookingAction action,
   }) {
-    // TODO:
-    // POST /notifications/send
-    // body:
-    // {
-    //   booking_id: bookingId,
-    //   action: action.name,
-    //   target: "tenant"
-    // }
+    _messaging.subscribeToTopic('tenant_$bookingId');
+
   }
 
   Future<void> _sendTokenToBackend(String newToken) async {}

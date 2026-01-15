@@ -29,6 +29,7 @@ class BookingRepositoryImpl implements BookingRepository {
       final data = await remote.getUserBookings();
       return Right(data);
     } on Failure catch (e) {
+      print('❌ Booking parsing error: $e');
       return Left(e);
     } catch (_) {
       return Left(ServerFailure());
@@ -101,18 +102,6 @@ class BookingRepositoryImpl implements BookingRepository {
       return Left(ServerFailure());
     }
   }
-  @override
-  Future<Either<Failure, Unit>> rejectBooking(int booking_id) async {
-    if (!await networkInfo.isConnected) {
-      return Left(NetworkFailure());
-    }
 
-    try {
-      await remote.rejectBooking(booking_id);
-      return Right(unit);
-    } on Failure catch (e) {
-      return Left(e);
-    }
-  }
 
 }

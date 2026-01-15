@@ -19,7 +19,6 @@ class ApiEndpoints {
 
   //update_booking
   static const  updateBooking= '${booking}/updateBooking';//{booking_id}
-  //static const  requestupdateBooking= '${booking}/updateBooking';
   static const  showUserBookingUpdateRequests = '${booking}/showUserBookingUpdateRequests';
   static const  showBookingUpdateRequest = '${booking}/showBookingUpdateRequest';//{booking_update_request_id}
   static const  cancelBookingUpdateRequest = '${booking}/cancelBookingUpdateRequest';//{booking_update_request_id}

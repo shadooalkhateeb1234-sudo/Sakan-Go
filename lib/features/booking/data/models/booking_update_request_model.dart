@@ -10,7 +10,7 @@ class BookingUpdateRequestModel extends BookingUpdateRequestEntity {
     required super.status,
     required super.update_start_date,
     required super.update_end_date,
-    required super.payment,
+      required super.payment,
   });
 
   factory BookingUpdateRequestModel.fromJson(Map<String, dynamic> json) {

@@ -70,7 +70,6 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import '../../features/booking/data/data_sources/booking_remote_data_source.dart';
 import '../../features/booking/data/repositories/booking_repository_impl.dart';
 import '../../features/booking/domain/use_cases/create_booking_usecase.dart';
-import '../../features/booking/domain/use_cases/reject_booking_usecase.dart';
 import '../../features/booking/domain/use_cases/cancel_booking_usecase.dart';
 import '../../features/booking/domain/repositories/booking_repository.dart';
 import '../../features/booking/domain/use_cases/get_bookings_usecase.dart';
@@ -227,6 +226,7 @@ Future<void> init() async
   //============================================================
   // BOOKINGS
 
+
   // Data source
     di.registerLazySingleton<BookingRemoteDataSource>(
           () => BookingRemoteDataSourceImpl(client: di() , userSessionLocalDataSource: di()),
@@ -245,7 +245,6 @@ Future<void> init() async
   di.registerLazySingleton(() => CreateBookingUseCase(di()));
   di.registerLazySingleton(() => CancelBookingUseCase(di()));
   di.registerLazySingleton(() => GetUserBookingsUsecase(di()));
-  di.registerLazySingleton(() => RejectBookingUseCase(di()));
   di.registerLazySingleton(() => UpdateBookingUseCase(di()));
 
   //! Bloc
@@ -256,7 +255,7 @@ Future<void> init() async
           cancelBooking: di(),
           getUserBookings: di(),
           updateBooking: di(),
-          rejectBooking: di(),
+
 
 
         ),
@@ -298,11 +297,11 @@ Future<void> init() async
 
 //owner_booking..............
 //data source
-  di.registerLazySingleton<OwnerBookingRemoteDataSource>(
-        () =>
-        OwnerBookingRemoteDataSourceImpl(
-            client: di(), userSessionLocalDataSource: di()),
-  );
+//   di.registerLazySingleton<OwnerBookingRemoteDataSource>(
+//         () =>
+//         OwnerBookingRemoteDataSourceImpl(
+//             client: di(), userSessionLocalDataSource: di()),
+//   );
   //repository
   di.registerLazySingleton<OwnerBookingRepository>(
         () =>

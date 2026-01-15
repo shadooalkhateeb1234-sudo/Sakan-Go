@@ -6,7 +6,7 @@ class BookingUpdateRequestEntity {
   final String status;
   final DateTime update_start_date;
   final DateTime update_end_date;
-  final PaymentEntity payment;
+  final PaymentEntity? payment;
 
   BookingUpdateRequestEntity({
     required this.id,
@@ -14,6 +14,6 @@ class BookingUpdateRequestEntity {
     required this.status,
     required this.update_start_date,
     required this.update_end_date,
-    required this.payment,
+      this.payment,
   });
 }

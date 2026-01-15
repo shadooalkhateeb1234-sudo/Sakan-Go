@@ -14,4 +14,12 @@ class PaymentModel extends PaymentEntity {
       amount: double.parse(json['amount'].toString()),
     );
   }
+
+  static fromEntity(PaymentEntity paymentMethod) {
+    return PaymentModel(
+      method: paymentMethod.method,
+      status: paymentMethod.status,
+      amount: paymentMethod.amount,
+    );
+  }
 }

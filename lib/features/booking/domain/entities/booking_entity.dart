@@ -1,4 +1,3 @@
-
 import 'package:sakan_go/features/booking/domain/entities/payment_entity.dart';
 
 class BookingEntity {
@@ -9,7 +8,7 @@ class BookingEntity {
   final DateTime end_date;
   final int total_price;
   final String status;
-  final PaymentEntity payment;
+  final PaymentEntity? payment;
 
   const BookingEntity({
     required this.id,
@@ -19,6 +18,6 @@ class BookingEntity {
     required this.end_date,
     required this.total_price,
     required this.status,
-    required this.payment,
+    this.payment,
   });
 }

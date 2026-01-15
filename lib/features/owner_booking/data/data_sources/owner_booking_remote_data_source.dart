@@ -29,7 +29,6 @@ class OwnerBookingRemoteDataSourceImpl implements OwnerBookingRemoteDataSource {
     required this.userSessionLocalDataSource,
   });
   Future<Map<String, String>> _headers() async {
-   // String token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3VzZXIvdmVyaWZ5LXBob25lLW90cCIsImlhdCI6MTc2ODIzODAxMiwiZXhwIjoxNzY4ODQyODEyLCJuYmYiOjE3NjgyMzgwMTIsImp0aSI6Ijc2WHhEN1RHTXFlZDE2dm4iLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.cawtsQLlg4IOpJGKVOGXhj5mMQsSCyr8isat0YLXdDk';
 
     final session = await userSessionLocalDataSource.getUserSession();
     if (session.token == null || session.token!.isEmpty) {
@@ -57,8 +56,8 @@ class OwnerBookingRemoteDataSourceImpl implements OwnerBookingRemoteDataSource {
           .map((e) => OwnerBookingModel.fromJson(e))
           .toList();
     }
-  // _handleResponse(response);
-      return [];
+  
+    throw ServerException();
   }
 
   @override

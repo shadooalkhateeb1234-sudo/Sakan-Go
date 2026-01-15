@@ -25,7 +25,6 @@ abstract class BookingRemoteDataSource {
     required DateTime endDate,
     required PaymentMethod paymentMethod,
   });
-  Future<Unit> rejectBooking(int booking_id);
 
 }
 class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
@@ -37,9 +36,9 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
   });
 
   Future<Map<String, String>> _headers() async {
-  //  String token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL3VzZXIvdmVyaWZ5LXBob25lLW90cCIsImlhdCI6MTc2ODIzODAxMiwiZXhwIjoxNzY4ODQyODEyLCJuYmYiOjE3NjgyMzgwMTIsImp0aSI6Ijc2WHhEN1RHTXFlZDE2dm4iLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.cawtsQLlg4IOpJGKVOGXhj5mMQsSCyr8isat0YLXdDk';
 
-    final session = await userSessionLocalDataSource.getUserSession();
+   final session = await userSessionLocalDataSource.getUserSession();
+
     if (session.token == null || session.token!.isEmpty) {
       throw UnAuthorizedFailure();
     }
@@ -119,15 +118,6 @@ class BookingRemoteDataSourceImpl implements BookingRemoteDataSource {
         'payment_method': paymentMethod.value,
 
       }),
-    );
-
-    return _handleResponse(response);
-  }
-  @override
-  Future<Unit> rejectBooking(int booking_id) async {
-    final response = await client.get(
-      Uri.parse('${ApiEndpoints.rejectAbook}/$booking_id'),
-      headers: await _headers(),
     );
 
     return _handleResponse(response);

@@ -24,7 +24,7 @@ class BookingPlaygroundPage extends StatelessWidget {
               context.push(
                 RouteName.createBooking,
                 extra: {
-                  'apartmentId': 99,
+                  'apartmentId': 1,
                   'userId': 1,
                 },
               );
@@ -44,7 +44,7 @@ class BookingPlaygroundPage extends StatelessWidget {
             title: 'Create Review (booking #1)',
             onTap: () {
               context.push(
-                 '/createReview/12/99' ,
+                 '/createReview/1/1' ,
               );
             },
           ),

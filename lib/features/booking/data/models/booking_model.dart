@@ -14,7 +14,8 @@ class BookingModel extends BookingEntity {
     required super.payment,
   });
 
-  factory BookingModel.fromJson(Map<String, dynamic> json) {
+
+ factory BookingModel.fromJson(Map<String, dynamic> json) {
     return BookingModel(
       id: json['id'],
       apartment_id: json['apartment_id'],
@@ -23,7 +24,9 @@ class BookingModel extends BookingEntity {
       end_date: DateTime.parse(json['end_date']),
       total_price: json['total_price'] ?? 0,
       status: json['status'],
-      payment: PaymentModel.fromJson(json['payment']),
+      payment: json['payment'] != null
+          ? PaymentModel.fromJson(json['payment'])
+          : PaymentModel(method: '', status: '', amount: 0),
     );
   }
 
@@ -33,6 +36,7 @@ class BookingModel extends BookingEntity {
       'end_date': end_date.toIso8601String().split('T').first,
     };
   }
+
 
   BookingModel copyWith({
     int? id,
